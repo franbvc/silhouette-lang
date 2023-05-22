@@ -24,8 +24,8 @@ void CodeGenContext::generateCode(NBlock &root) {
 
     /* Push a new variable/block context */
     pushBlock(bblock);
-    root.codeGen(*this); /* emit bytecode for the toplevel block */
-    llvm::ReturnInst::Create(context, bblock);
+    llvm::Value *mainRetVal = root.codeGen(*this); /* emit bytecode for the toplevel block */
+    llvm::ReturnInst::Create(context, mainRetVal,bblock);
     popBlock();
 
     /* Print the bytecode in a human-readable format
@@ -111,11 +111,6 @@ llvm::Value *NBlock::codeGen(CodeGenContext &context) {
 llvm::Value *NExpressionStatement::codeGen(CodeGenContext &context) {
     std::cout << "Generating code for " << typeid(expression).name()
               << std::endl;
-
-    llvm::Value *expressionValue = expression.codeGen(context);
-
-    llvm::ReturnInst::Create(context.context, expressionValue,
-                             context.currentBlock());
 
     return expression.codeGen(context);
 }
