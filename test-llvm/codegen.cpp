@@ -10,8 +10,13 @@ void CodeGenContext::generateCode(NBlock &root) {
 
     /* Create the top level interpreter function to call as entry */
     std::vector<llvm::Type *> argTypes;
+    // llvm::FunctionType *ftype = llvm::FunctionType::get(
+    //     llvm::Type::getVoidTy(context), argTypes, false);
+
+    // test main return int
     llvm::FunctionType *ftype = llvm::FunctionType::get(
-        llvm::Type::getVoidTy(context), argTypes, false);
+        llvm::Type::getInt64Ty(context), argTypes, false);
+
     mainFunction = llvm::Function::Create(
         ftype, llvm::GlobalValue::InternalLinkage, "main", module);
     llvm::BasicBlock *bblock =
@@ -26,7 +31,7 @@ void CodeGenContext::generateCode(NBlock &root) {
     /* Print the bytecode in a human-readable format
        to see if our program compiled properly
      */
-    std::cout << "Code is generated.n";
+    std::cout << "Code is generated.n" << endl;
     llvm::legacy::PassManager pm;
     pm.add(createPrintModulePass(llvm::outs()));
     pm.run(*module);
@@ -34,7 +39,7 @@ void CodeGenContext::generateCode(NBlock &root) {
 
 /* Executes the AST by running the main function */
 llvm::GenericValue CodeGenContext::runCode() {
-    std::cout << "Running code...n";
+    std::cout << "Running code...n" << endl;
 
     std::unique_ptr<llvm::ExecutionEngine> ee(
         llvm::EngineBuilder(std::unique_ptr<llvm::Module>(module)).create());
@@ -42,7 +47,14 @@ llvm::GenericValue CodeGenContext::runCode() {
     vector<llvm::GenericValue> noargs;
     llvm::GenericValue v = ee->runFunction(mainFunction, noargs);
 
-    std::cout << "Code was run.n";
+    std::cout << "Code was run.n" << endl;
+
+    // Extract the integer value
+    long long value = v.IntVal.getSExtValue();
+
+    // Print the value
+    std::cout << "Return value: " << value << std::endl;
+
     return v;
 }
 
@@ -99,5 +111,11 @@ llvm::Value *NBlock::codeGen(CodeGenContext &context) {
 llvm::Value *NExpressionStatement::codeGen(CodeGenContext &context) {
     std::cout << "Generating code for " << typeid(expression).name()
               << std::endl;
+
+    llvm::Value *expressionValue = expression.codeGen(context);
+
+    llvm::ReturnInst::Create(context.context, expressionValue,
+                             context.currentBlock());
+
     return expression.codeGen(context);
 }

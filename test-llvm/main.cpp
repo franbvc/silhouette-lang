@@ -17,6 +17,10 @@ int main(int argc, char **argv) {
     std::cout << "Ran yyparse!" << std::endl;
     std::cout << programBlock << std::endl;
 
+    /* Print Type os statements in programBlock*/
+    //for (auto stmt : programBlock->statements)
+    //    std::cout << typeid(*stmt).name() << std::endl;
+
     CodeGenContext context;
     context.generateCode(*programBlock);
     context.runCode();
