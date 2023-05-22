@@ -10,10 +10,10 @@ void CodeGenContext::generateCode(NBlock &root) {
 
     /* Create the top level interpreter function to call as entry */
     std::vector<llvm::Type *> argTypes;
-    llvm::FunctionType *ftype =
-        llvm::FunctionType::get(llvm::Type::getVoidTy(context), argTypes, false);
-    mainFunction =
-        llvm::Function::Create(ftype, llvm::GlobalValue::InternalLinkage, "main", module);
+    llvm::FunctionType *ftype = llvm::FunctionType::get(
+        llvm::Type::getVoidTy(context), argTypes, false);
+    mainFunction = llvm::Function::Create(
+        ftype, llvm::GlobalValue::InternalLinkage, "main", module);
     llvm::BasicBlock *bblock =
         llvm::BasicBlock::Create(context, "entry", mainFunction, nullptr);
 
@@ -50,7 +50,14 @@ llvm::GenericValue CodeGenContext::runCode() {
 
 llvm::Value *NInteger::codeGen(CodeGenContext &context) {
     std::cout << "Creating integer: " << value << std::endl;
-    return llvm::ConstantInt::get(llvm::Type::getInt64Ty(context.context), value, true);
+    return llvm::ConstantInt::get(llvm::Type::getInt64Ty(context.context),
+                                  value, true);
+}
+
+llvm::Value *NFloat::codeGen(CodeGenContext &context) {
+    std::cout << "Creating float: " << value << std::endl;
+    return llvm::ConstantFP::get(llvm::Type::getDoubleTy(context.context),
+                                 value);
 }
 
 llvm::Value *NBinaryOperator::codeGen(CodeGenContext &context) {
@@ -74,8 +81,8 @@ llvm::Value *NBinaryOperator::codeGen(CodeGenContext &context) {
     return nullptr;
 math:
     return llvm::BinaryOperator::Create(instr, lhs.codeGen(context),
-                                  rhs.codeGen(context), "",
-                                  context.currentBlock());
+                                        rhs.codeGen(context), "",
+                                        context.currentBlock());
 }
 
 llvm::Value *NBlock::codeGen(CodeGenContext &context) {

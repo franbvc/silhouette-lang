@@ -36,6 +36,15 @@ public:
   virtual llvm::Value *codeGen(CodeGenContext &context);
 };
 
+class NFloat : public NExpression {
+  public:
+    double value;
+
+    explicit NFloat(double value) : value(value) {}
+
+    virtual llvm::Value *codeGen(CodeGenContext &context);
+};
+
 class NBinaryOperator : public NExpression {
 public:
   int op;

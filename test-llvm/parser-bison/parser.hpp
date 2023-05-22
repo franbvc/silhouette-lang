@@ -55,13 +55,14 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     TINTEGER = 258,                /* TINTEGER  */
-    TLPAREN = 259,                 /* TLPAREN  */
-    TRPAREN = 260,                 /* TRPAREN  */
-    TPLUS = 261,                   /* TPLUS  */
-    TMINUS = 262,                  /* TMINUS  */
-    TMUL = 263,                    /* TMUL  */
-    TDIV = 264,                    /* TDIV  */
-    TSEMICOLON = 265               /* TSEMICOLON  */
+    TFLOAT = 259,                  /* TFLOAT  */
+    TLPAREN = 260,                 /* TLPAREN  */
+    TRPAREN = 261,                 /* TRPAREN  */
+    TPLUS = 262,                   /* TPLUS  */
+    TMINUS = 263,                  /* TMINUS  */
+    TMUL = 264,                    /* TMUL  */
+    TDIV = 265,                    /* TDIV  */
+    TSEMICOLON = 266               /* TSEMICOLON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,7 +80,7 @@ union YYSTYPE
     int token;
     std::string *string;
 
-#line 83 "parser.hpp"
+#line 84 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

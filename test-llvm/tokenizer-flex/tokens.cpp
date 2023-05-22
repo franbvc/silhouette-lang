@@ -352,8 +352,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 11
-#define YY_END_OF_BUFFER 12
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -361,10 +361,10 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[17] =
+static const flex_int16_t yy_accept[19] =
     {   0,
-        0,    0,   12,   10,    1,    1,    4,    5,    8,    6,
-        7,    9,    2,    3,    2,    0
+        0,    0,   13,   11,    1,    1,    5,    6,    9,    7,
+        8,   10,    3,    4,    2,    3,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -373,8 +373,8 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
-        5,    6,    7,    1,    8,    1,    9,   10,   10,   10,
-       10,   10,   10,   10,   10,   10,   10,    1,   11,    1,
+        5,    6,    7,    1,    8,    9,   10,   11,   11,   11,
+       11,   11,   11,   11,   11,   11,   11,    1,   12,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -399,36 +399,36 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[12] =
+static const YY_CHAR yy_meta[13] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1
+        1,    1
     } ;
 
-static const flex_int16_t yy_base[17] =
+static const flex_int16_t yy_base[19] =
     {   0,
-        0,    0,   14,   15,   15,   15,   15,   15,   15,   15,
-       15,   15,    3,   15,    2,   15
+        0,    0,   17,   18,   18,   18,   18,   18,   18,   18,
+       18,   18,    4,   18,    5,    0,    3,   18
     } ;
 
-static const flex_int16_t yy_def[17] =
+static const flex_int16_t yy_def[19] =
     {   0,
-       16,    1,   16,   16,   16,   16,   16,   16,   16,   16,
-       16,   16,   16,   16,   16,    0
+       18,    1,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18,   18,   18,   18,   13,   18,    0
     } ;
 
-static const flex_int16_t yy_nxt[27] =
+static const flex_int16_t yy_nxt[31] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-       14,   15,   15,   16,    3,   16,   16,   16,   16,   16,
-       16,   16,   16,   16,   16,   16
+        4,    5,    6,    7,    8,    9,   10,   11,    4,   12,
+       13,   14,   15,   17,   16,   17,   18,    3,   18,   18,
+       18,   18,   18,   18,   18,   18,   18,   18,   18,   18
     } ;
 
-static const flex_int16_t yy_chk[27] =
+static const flex_int16_t yy_chk[31] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   15,   13,    3,   16,   16,   16,   16,   16,   16,
-       16,   16,   16,   16,   16,   16
+        1,    1,   13,   17,   13,   15,    3,   18,   18,   18,
+       18,   18,   18,   18,   18,   18,   18,   18,   18,   18
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -452,7 +452,7 @@ char *yytext;
 #include "../parser-bison/parser.hpp"
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 #define TOKEN(t) (yylval.token = t)
-extern "C" int yywrap() { }
+extern "C" int yywrap() { return 1; }
 #line 457 "tokens.cpp"
 #line 458 "tokens.cpp"
 
@@ -701,13 +701,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 17 )
+				if ( yy_current_state >= 19 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 15 );
+		while ( yy_base[yy_current_state] != 18 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -740,56 +740,63 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 13 "tokens.l"
-SAVE_TOKEN; return TINTEGER;
+SAVE_TOKEN; return TFLOAT;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 14 "tokens.l"
-return TOKEN(TSEMICOLON);
+SAVE_TOKEN; return TINTEGER;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 15 "tokens.l"
-return TOKEN(TLPAREN);
+return TOKEN(TSEMICOLON);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 16 "tokens.l"
-return TOKEN(TRPAREN);
+return TOKEN(TLPAREN);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 17 "tokens.l"
-return TOKEN(TPLUS);
+return TOKEN(TRPAREN);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 18 "tokens.l"
-return TOKEN(TMINUS);
+return TOKEN(TPLUS);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 19 "tokens.l"
-return TOKEN(TMUL);
+return TOKEN(TMINUS);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 20 "tokens.l"
-return TOKEN(TDIV);
+return TOKEN(TMUL);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
+#line 21 "tokens.l"
+return TOKEN(TDIV);
+	YY_BREAK
+case YY_STATE_EOF(INITIAL):
 #line 22 "tokens.l"
-printf("Unknown token: %s \n", yytext); yyterminate();
+printf("End of File \n"); yyterminate();
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "tokens.l"
+#line 23 "tokens.l"
+printf("Unknown token: %s \n", yytext); yyterminate();
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 25 "tokens.l"
 ECHO;
 	YY_BREAK
-#line 791 "tokens.cpp"
-case YY_STATE_EOF(INITIAL):
-	yyterminate();
+#line 800 "tokens.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1084,7 +1091,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 17 )
+			if ( yy_current_state >= 19 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1112,11 +1119,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 17 )
+		if ( yy_current_state >= 19 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 16);
+	yy_is_jam = (yy_current_state == 18);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1792,6 +1799,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 24 "tokens.l"
+#line 25 "tokens.l"
 
 

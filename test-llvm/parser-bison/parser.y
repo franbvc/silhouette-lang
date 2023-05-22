@@ -20,7 +20,7 @@
    match our tokens.l lex file. We also define the node type
    they represent.
  */
-%token <string> TINTEGER
+%token <string> TINTEGER TFLOAT
 %token <token> TLPAREN TRPAREN
 %token <token> TPLUS TMINUS TMUL TDIV
 %token <token> TSEMICOLON
@@ -71,7 +71,8 @@ expr_op : TPLUS | TMINUS
 term_op : TMUL | TDIV
         ;
 
-factor_var : TINTEGER { $$ = new NInteger(atol($1->c_str())); delete $1;}
+factor_var : TINTEGER { $$ = new NInteger(atol($1->c_str())); delete $1; }
+	   | TFLOAT { $$ = new NFloat(atof($1->c_str())); delete $1; }
            ;
 
 %%
