@@ -2,11 +2,12 @@
 #include "node.hpp"
 #include "parser-bison/parser.hpp"
 #include <llvm-14/llvm/IR/InstrTypes.h>
-#include <llvm-14/llvm/IR/IRBuilder.h>
+//#include <llvm-14/llvm/IR/IRBuilder.h>
+//#include <llvm-14/llvm/IR/Instructions.h.h>
 
 using namespace std;
 
-static std::unique_ptr<llvm::IRBuilder<>> Builder;
+//static std::unique_ptr<llvm::IRBuilder<>> Builder;
 
 /* Compile the AST into a module */
 void CodeGenContext::generateCode(NBlock &root) {
@@ -23,7 +24,7 @@ void CodeGenContext::generateCode(NBlock &root) {
     llvm::FunctionType *ftype = llvm::FunctionType::get(
         llvm::Type::getInt64Ty(context), argTypes, false);
 
-    Builder = std::make_unique<llvm::IRBuilder<>>(context);
+    //Builder = std::make_unique<llvm::IRBuilder<>>(context);
 
     mainFunction = llvm::Function::Create(
         ftype, llvm::GlobalValue::InternalLinkage, "main", module);
@@ -79,6 +80,51 @@ llvm::Value *NFloat::codeGen(CodeGenContext &context) {
     std::cout << "Creating float: " << value << std::endl;
     return llvm::ConstantFP::get(llvm::Type::getDoubleTy(context.context),
                                  value);
+}
+
+llvm::Value* NIdentifier::codeGen(CodeGenContext& context)
+{
+    std::cout << "Creating identifier reference: " << name << std::endl;
+    if (context.locals().find(name) == context.locals().end()) {
+        std::cerr << "undeclared variable " << name << std::endl;
+        return nullptr;
+    }
+
+    llvm::Value* variablePtr = context.locals()[name];
+    llvm::Type* var_type = variablePtr->getType()->getPointerElementType();
+    return new llvm::LoadInst(var_type, variablePtr, "", false, context.currentBlock());
+}
+
+
+llvm::Value* NVariableDeclaration::codeGen(CodeGenContext& context)
+{
+    std::cout << "Creating variable declaration " << type << " " << id.name << std::endl;
+
+    llvm::Type* var_type = llvm::Type::getInt64Ty(context.context);
+    auto *alloc = new llvm::AllocaInst(var_type, 0, id.name, context.currentBlock());
+
+    context.locals()[id.name] = alloc;
+    if (assignmentExpr != nullptr) {
+        NAssignment assn(id, *assignmentExpr);
+        assn.codeGen(context);
+    }
+    return alloc;
+}
+
+llvm::Value* NAssignment::codeGen(CodeGenContext& context)
+{
+    std::cout << "Creating assignment for " << lhs.name << std::endl;
+    if (context.locals().find(lhs.name) == context.locals().end()) {
+        std::cerr << "undeclared variable " << lhs.name << std::endl;
+        return nullptr;
+    }
+
+    return new llvm::StoreInst(
+        rhs.codeGen(context),
+        context.locals()[lhs.name],
+        false,
+        context.currentBlock()
+        );
 }
 
 llvm::Value *NBinaryOperator::codeGen(CodeGenContext &context) {

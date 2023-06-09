@@ -10,8 +10,13 @@ extern "C" int yywrap() { return 1; }
 %%
 
 [ \t\n]              ; /* ignore whitespace */
+Int                     return TOKEN(TTYPE_INT);
+let                     return TOKEN(TLET);
+[a-zA-Z_][a-zA-Z0-9_]*  SAVE_TOKEN; return TIDENTIFIER;
 [0-9]+\.[0-9]*          SAVE_TOKEN; return TFLOAT;
 [0-9]+                  SAVE_TOKEN; return TINTEGER;
+":"                     return TOKEN(TCOLON);
+"="                     return TOKEN(TEQUAL);
 ";"                     return TOKEN(TSEMICOLON);
 "("                     return TOKEN(TLPAREN);
 ")"                     return TOKEN(TRPAREN);

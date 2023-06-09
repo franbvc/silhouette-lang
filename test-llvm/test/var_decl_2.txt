@@ -1,0 +1,2 @@
+let foo: Int = 10;
+foo + 5;

@@ -54,16 +54,21 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    TINTEGER = 258,                /* TINTEGER  */
-    TFLOAT = 259,                  /* TFLOAT  */
-    TLPAREN = 260,                 /* TLPAREN  */
-    TRPAREN = 261,                 /* TRPAREN  */
-    TPLUS = 262,                   /* TPLUS  */
-    TMINUS = 263,                  /* TMINUS  */
-    TMUL = 264,                    /* TMUL  */
-    TDIV = 265,                    /* TDIV  */
-    TNOT = 266,                    /* TNOT  */
-    TSEMICOLON = 267               /* TSEMICOLON  */
+    TIDENTIFIER = 258,             /* TIDENTIFIER  */
+    TINTEGER = 259,                /* TINTEGER  */
+    TFLOAT = 260,                  /* TFLOAT  */
+    TTYPE_INT = 261,               /* TTYPE_INT  */
+    TLPAREN = 262,                 /* TLPAREN  */
+    TRPAREN = 263,                 /* TRPAREN  */
+    TPLUS = 264,                   /* TPLUS  */
+    TMINUS = 265,                  /* TMINUS  */
+    TMUL = 266,                    /* TMUL  */
+    TDIV = 267,                    /* TDIV  */
+    TEQUAL = 268,                  /* TEQUAL  */
+    TNOT = 269,                    /* TNOT  */
+    TSEMICOLON = 270,              /* TSEMICOLON  */
+    TCOLON = 271,                  /* TCOLON  */
+    TLET = 272                     /* TLET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -78,10 +83,11 @@ union YYSTYPE
     NBlock *block;
     NExpression *expr;
     NStatement *stmt;
+    NIdentifier *ident;
     int token;
     std::string *string;
 
-#line 85 "parser.hpp"
+#line 91 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

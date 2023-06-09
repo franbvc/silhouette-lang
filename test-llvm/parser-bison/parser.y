@@ -12,6 +12,7 @@
     NBlock *block;
     NExpression *expr;
     NStatement *stmt;
+    NIdentifier *ident;
     int token;
     std::string *string;
 }
@@ -20,20 +21,24 @@
    match our tokens.l lex file. We also define the node type
    they represent.
  */
-%token <string> TINTEGER TFLOAT
+%token <string> TIDENTIFIER TINTEGER TFLOAT
+%token <token> TTYPE_INT
 %token <token> TLPAREN TRPAREN
-%token <token> TPLUS TMINUS TMUL TDIV
+%token <token> TPLUS TMINUS TMUL TDIV TEQUAL
 %token <token> TNOT
-%token <token> TSEMICOLON
+%token <token> TSEMICOLON TCOLON
+%token <token> TLET
 
 /* Define the type of node our nonterminal symbols represent.
    The types refer to the %union declaration above. Ex: when
    we call an ident (defined by union type ident) we are really
    calling an (NIdentifier*). It makes the compiler happy.
  */
+%type <ident> ident
 %type <expr> expr factor_var term factor
 %type <block> program stmts
-%type <stmt> stmt
+%type <stmt> stmt var_decl
+%type <token> var_type
 
 /* Operator precedence for mathematical operators */
 %left TPLUS TMINUS
@@ -51,7 +56,18 @@ stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
       ;
 
 /* Statement */
-stmt : expr { $$ = new NExpressionStatement(*$1); };
+stmt : expr TSEMICOLON { $$ = new NExpressionStatement(*$1); }
+     | var_decl TSEMICOLON
+     ;
+
+var_decl : TLET ident TCOLON var_type { $$ = new NVariableDeclaration(*$2, $4); }
+         | TLET ident TCOLON var_type TEQUAL expr { $$ = new NVariableDeclaration(*$2, $4, $6); }
+         ;
+
+var_type : TTYPE_INT;
+
+ident : TIDENTIFIER { $$ = new NIdentifier(*$1); delete $1; }
+
 
 /* Expression */
 expr : expr TPLUS term { $$ = new NBinaryOperator(*$1, $2, *$3); }
@@ -68,6 +84,7 @@ factor : TLPAREN expr TRPAREN { $$ = $2; }
        | TPLUS factor { $$ = new NUnaryOperator($1, *$2); }
        | TMINUS factor { $$ = new NUnaryOperator($1, *$2); }
        | TNOT factor { $$ = new NUnaryOperator($1, *$2); }
+       | ident { $<ident>$ = $1; }
        | factor_var
        ;
 

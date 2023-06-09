@@ -1,0 +1,4 @@
+let foo: Int = 15;
+let bar: Int = -3;
+let foobar: Int = (foo + bar) *2;
+foobar / 4;
