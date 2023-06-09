@@ -23,6 +23,7 @@
 %token <string> TINTEGER TFLOAT
 %token <token> TLPAREN TRPAREN
 %token <token> TPLUS TMINUS TMUL TDIV
+%token <token> TNOT
 %token <token> TSEMICOLON
 
 /* Define the type of node our nonterminal symbols represent.
@@ -33,7 +34,6 @@
 %type <expr> expr factor_var term factor
 %type <block> program stmts
 %type <stmt> stmt
-%type <token> expr_op term_op
 
 /* Operator precedence for mathematical operators */
 %left TPLUS TMINUS
@@ -54,25 +54,25 @@ stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
 stmt : expr { $$ = new NExpressionStatement(*$1); };
 
 /* Expression */
-expr : term
-     | term expr_op term { $$ = new NBinaryOperator(*$1, $2, *$3); }
+expr : expr TPLUS term { $$ = new NBinaryOperator(*$1, $2, *$3); }
+     | expr TMINUS term { $$ = new NBinaryOperator(*$1, $2, *$3); }
+     | term
      ;
 
-term : factor
-     | factor term_op factor { $$ = new NBinaryOperator(*$1, $2, *$3); }
+term : term TMUL factor { $$ = new NBinaryOperator(*$1, $2, *$3); }
+     | term TDIV factor { $$ = new NBinaryOperator(*$1, $2, *$3); }
+     | factor
+     ;
 
-factor : factor_var
-       | TLPAREN expr TRPAREN { $$ = $2; }
+factor : TLPAREN expr TRPAREN { $$ = $2; }
+       | TPLUS factor { $$ = new NUnaryOperator($1, *$2); }
+       | TMINUS factor { $$ = new NUnaryOperator($1, *$2); }
+       | TNOT factor { $$ = new NUnaryOperator($1, *$2); }
+       | factor_var
        ;
 
-expr_op : TPLUS | TMINUS
-        ;
-
-term_op : TMUL | TDIV
-        ;
-
 factor_var : TINTEGER { $$ = new NInteger(atol($1->c_str())); delete $1; }
-	   | TFLOAT { $$ = new NFloat(atof($1->c_str())); delete $1; }
+	   //| TFLOAT { $$ = new NFloat(atof($1->c_str())); delete $1; }
            ;
 
 %%

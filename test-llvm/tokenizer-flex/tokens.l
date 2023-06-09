@@ -19,6 +19,7 @@ extern "C" int yywrap() { return 1; }
 "-"                     return TOKEN(TMINUS);
 "*"                     return TOKEN(TMUL);
 "/"                     return TOKEN(TDIV);
+"!"                     return TOKEN(TNOT);
 <<EOF>>                 printf("End of File \n"); yyterminate();
 .                       printf("Unknown token: %s \n", yytext); yyterminate();
 

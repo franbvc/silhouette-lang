@@ -62,7 +62,8 @@ extern int yydebug;
     TMINUS = 263,                  /* TMINUS  */
     TMUL = 264,                    /* TMUL  */
     TDIV = 265,                    /* TDIV  */
-    TSEMICOLON = 266               /* TSEMICOLON  */
+    TNOT = 266,                    /* TNOT  */
+    TSEMICOLON = 267               /* TSEMICOLON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -80,7 +81,7 @@ union YYSTYPE
     int token;
     std::string *string;
 
-#line 84 "parser.hpp"
+#line 85 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
