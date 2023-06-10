@@ -1,0 +1,3 @@
+let foo: Int = 5 && 2; 
+let bar: Int = 3 || 0;
+(foo || bar) == 0;

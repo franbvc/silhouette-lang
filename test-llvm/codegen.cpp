@@ -161,6 +161,12 @@ llvm::Value *NBinaryOperator::codeGen(CodeGenContext &context) {
     case TCLE:
         cmpInstr = llvm::CmpInst::ICMP_SLE;
         goto cmp;
+    case TAND:
+        return llvm::BinaryOperator::CreateAnd(
+            lhs.codeGen(context), rhs.codeGen(context), "", context.currentBlock());
+    case TOR:
+        return llvm::BinaryOperator::CreateOr(
+            lhs.codeGen(context), rhs.codeGen(context), "", context.currentBlock());
     }
 
     return nullptr;
