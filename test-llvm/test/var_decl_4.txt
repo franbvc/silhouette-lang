@@ -1,0 +1,5 @@
+let a: Int = 5;
+let b: Int = 5;
+
+let c: Int = a + b;
+c -2;

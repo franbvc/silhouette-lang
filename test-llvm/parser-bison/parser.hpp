@@ -60,15 +60,27 @@ extern int yydebug;
     TTYPE_INT = 261,               /* TTYPE_INT  */
     TLPAREN = 262,                 /* TLPAREN  */
     TRPAREN = 263,                 /* TRPAREN  */
-    TPLUS = 264,                   /* TPLUS  */
-    TMINUS = 265,                  /* TMINUS  */
-    TMUL = 266,                    /* TMUL  */
-    TDIV = 267,                    /* TDIV  */
-    TEQUAL = 268,                  /* TEQUAL  */
-    TNOT = 269,                    /* TNOT  */
-    TSEMICOLON = 270,              /* TSEMICOLON  */
-    TCOLON = 271,                  /* TCOLON  */
-    TLET = 272                     /* TLET  */
+    TLBRACE = 264,                 /* TLBRACE  */
+    TRBRACE = 265,                 /* TRBRACE  */
+    TIF = 266,                     /* TIF  */
+    TELSE = 267,                   /* TELSE  */
+    TPLUS = 268,                   /* TPLUS  */
+    TMINUS = 269,                  /* TMINUS  */
+    TMUL = 270,                    /* TMUL  */
+    TDIV = 271,                    /* TDIV  */
+    TEQUAL = 272,                  /* TEQUAL  */
+    TNOT = 273,                    /* TNOT  */
+    TCEQ = 274,                    /* TCEQ  */
+    TCNE = 275,                    /* TCNE  */
+    TCGT = 276,                    /* TCGT  */
+    TCGE = 277,                    /* TCGE  */
+    TCLT = 278,                    /* TCLT  */
+    TCLE = 279,                    /* TCLE  */
+    TAND = 280,                    /* TAND  */
+    TOR = 281,                     /* TOR  */
+    TSEMICOLON = 282,              /* TSEMICOLON  */
+    TCOLON = 283,                  /* TCOLON  */
+    TLET = 284                     /* TLET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,7 +99,7 @@ union YYSTYPE
     int token;
     std::string *string;
 
-#line 91 "parser.hpp"
+#line 103 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

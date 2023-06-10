@@ -112,3 +112,22 @@ class NExpressionStatement : public NStatement {
 
     virtual llvm::Value *codeGen(CodeGenContext &context);
 };
+
+class NIfStatement : public NStatement
+{
+  public:
+    NExpression &condition;
+    NBlock &trueBlock;
+    NBlock &falseBlock;
+
+    NIfStatement(NExpression &condition, NBlock &trueBlock, NBlock &falseBlock) : condition(condition), trueBlock(trueBlock), falseBlock(falseBlock) {}
+    //NIfStatement(NExpression &condition, NBlock &trueBlock) : condition(condition), trueBlock(trueBlock) {}
+    virtual llvm::Value *codeGen(CodeGenContext &context);
+};
+
+
+
+
+
+
+

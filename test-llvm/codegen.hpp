@@ -40,9 +40,23 @@ class CodeGenContext {
         topBlock->block = block;
         blocks.push(topBlock);
     }
+
+    void pushBlockGlobal(llvm::BasicBlock *block) {
+        auto *topBlock = new CodeGenBlock();
+        topBlock->block = block;
+        // Copy the locals from the current block to the new block
+        topBlock->locals = blocks.top()->locals;
+        blocks.push(topBlock);
+    }
+
     void popBlock() {
         CodeGenBlock *top = blocks.top();
         blocks.pop();
+        // Preserve the locals if there is a previous block
+        if (!blocks.empty()) {
+            CodeGenBlock *previous = blocks.top();
+            previous->locals = top->locals;
+        }
         delete top;
     }
 };

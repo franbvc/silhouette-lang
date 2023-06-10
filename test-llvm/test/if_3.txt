@@ -1,0 +1,11 @@
+let foo: Int = 10;
+
+if (foo > 5) {
+    20 + 2;
+} else {
+    30 - 15;
+}
+
+let bar: Int = 14 + 49;
+bar = bar + 12;
+bar - 50;
