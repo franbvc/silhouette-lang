@@ -2,7 +2,7 @@
 
 "silhouette" is a French word used to describe the dark shape and outline of someone or 
 something visible against a lighter background, especially in dim light.
-`
+
 When you think of something iconic, like the Porsche 911, you don't need to see the
 whole car to know what it is. Simply by its silhouette you can tell it's a 911, because
 of its sleek shape and aesthetic pleasing lines.
