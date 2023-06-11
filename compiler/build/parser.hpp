@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_HPP_INCLUDED
-# define YY_YY_PARSER_HPP_INCLUDED
+#ifndef YY_YY_HOME_FRANBVC_INSPER_LOGCOMP_LANG_SILHOUETTE_LANG_TEST_LLVM_BUILD_PARSER_HPP_INCLUDED
+# define YY_YY_HOME_FRANBVC_INSPER_LOGCOMP_LANG_SILHOUETTE_LANG_TEST_LLVM_BUILD_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -55,52 +55,37 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     TIDENTIFIER = 258,             /* TIDENTIFIER  */
-    TFLOAT = 259,                  /* TFLOAT  */
-    TINTEGER = 260,                /* TINTEGER  */
-    TSTRING = 261,                 /* TSTRING  */
-    TTYPE_STRING = 262,            /* TTYPE_STRING  */
-    TTYPE_INT = 263,               /* TTYPE_INT  */
-    TTYPE_FLOAT = 264,             /* TTYPE_FLOAT  */
-    TTYPE_VOID = 265,              /* TTYPE_VOID  */
-    TEQUAL = 266,                  /* TEQUAL  */
-    TNOT = 267,                    /* TNOT  */
-    TCEQ = 268,                    /* TCEQ  */
-    TCNE = 269,                    /* TCNE  */
-    TCLT = 270,                    /* TCLT  */
-    TCLE = 271,                    /* TCLE  */
-    TCGT = 272,                    /* TCGT  */
-    TCGE = 273,                    /* TCGE  */
-    TLPAREN = 274,                 /* TLPAREN  */
-    TRPAREN = 275,                 /* TRPAREN  */
-    TLBRACE = 276,                 /* TLBRACE  */
-    TRBRACE = 277,                 /* TRBRACE  */
-    TDOT = 278,                    /* TDOT  */
-    TCOMMA = 279,                  /* TCOMMA  */
-    TPLUS = 280,                   /* TPLUS  */
-    TMINUS = 281,                  /* TMINUS  */
-    TMUL = 282,                    /* TMUL  */
-    TDIV = 283,                    /* TDIV  */
-    TINC = 284,                    /* TINC  */
-    TDEC = 285,                    /* TDEC  */
-    TADD_ASSIGN = 286,             /* TADD_ASSIGN  */
-    TSUB_ASSIGN = 287,             /* TSUB_ASSIGN  */
-    TMUL_ASSIGN = 288,             /* TMUL_ASSIGN  */
-    TDIV_ASSIGN = 289,             /* TDIV_ASSIGN  */
-    TMOD_ASSIGN = 290,             /* TMOD_ASSIGN  */
-    TAND = 291,                    /* TAND  */
-    TOR = 292,                     /* TOR  */
-    TDOUBLE_COLON = 293,           /* TDOUBLE_COLON  */
-    TSEMICOLON = 294,              /* TSEMICOLON  */
-    TARROW = 295,                  /* TARROW  */
-    TSYM_PRINT = 296,              /* TSYM_PRINT  */
-    TSYM_READ = 297,               /* TSYM_READ  */
-    TSYM_IF = 298,                 /* TSYM_IF  */
-    TSYM_ELSE = 299,               /* TSYM_ELSE  */
-    TSYM_WHILE = 300,              /* TSYM_WHILE  */
-    TSYM_FN = 301,                 /* TSYM_FN  */
-    TSYM_CALL = 302,               /* TSYM_CALL  */
-    TSYM_RESULT = 303,             /* TSYM_RESULT  */
-    TSYM_GUARD = 304               /* TSYM_GUARD  */
+    TINTEGER = 259,                /* TINTEGER  */
+    TFLOAT = 260,                  /* TFLOAT  */
+    TTYPE_INT = 261,               /* TTYPE_INT  */
+    TLPAREN = 262,                 /* TLPAREN  */
+    TRPAREN = 263,                 /* TRPAREN  */
+    TLBRACE = 264,                 /* TLBRACE  */
+    TRBRACE = 265,                 /* TRBRACE  */
+    TIF = 266,                     /* TIF  */
+    TELSE = 267,                   /* TELSE  */
+    TPLUS = 268,                   /* TPLUS  */
+    TMINUS = 269,                  /* TMINUS  */
+    TMUL = 270,                    /* TMUL  */
+    TDIV = 271,                    /* TDIV  */
+    TEQUAL = 272,                  /* TEQUAL  */
+    TNOT = 273,                    /* TNOT  */
+    TCEQ = 274,                    /* TCEQ  */
+    TCNE = 275,                    /* TCNE  */
+    TCGT = 276,                    /* TCGT  */
+    TCGE = 277,                    /* TCGE  */
+    TCLT = 278,                    /* TCLT  */
+    TCLE = 279,                    /* TCLE  */
+    TAND = 280,                    /* TAND  */
+    TOR = 281,                     /* TOR  */
+    TSEMICOLON = 282,              /* TSEMICOLON  */
+    TCOLON = 283,                  /* TCOLON  */
+    TARROW = 284,                  /* TARROW  */
+    TCOMMA = 285,                  /* TCOMMA  */
+    TLET = 286,                    /* TLET  */
+    TFN = 287,                     /* TFN  */
+    TCALL = 288,                   /* TCALL  */
+    TRESULT = 289                  /* TRESULT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -109,23 +94,20 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 10 "parser.y"
+#line 10 "./parser-bison/parser.y"
 
     Node *node;
     NBlock *block;
     NExpression *expr;
     NStatement *stmt;
     NIdentifier *ident;
+    int token;
+    std::string *string;
     NVariableDeclaration *var_decl;
-    NFunctionDeclaration *func_decl;
     std::vector<NVariableDeclaration*> *varvec;
     std::vector<NExpression*> *exprvec;
-    std::string *string;
-    std::vector<NArgDeclaration*> *arg_type_vec;
-    std::vector<NArgument*> *arg_name_vec;
-    int token;
 
-#line 129 "parser.hpp"
+#line 111 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -140,4 +122,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_PARSER_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_FRANBVC_INSPER_LOGCOMP_LANG_SILHOUETTE_LANG_TEST_LLVM_BUILD_PARSER_HPP_INCLUDED  */

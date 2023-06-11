@@ -1,0 +1,6 @@
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/parser.dir
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/intrinsics_gen.dir
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/omp_gen.dir
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/acc_gen.dir
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/edit_cache.dir
+/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/CMakeFiles/rebuild_cache.dir

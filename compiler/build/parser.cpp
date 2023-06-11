@@ -67,15 +67,15 @@
 
 
 /* First part of user prologue.  */
-#line 1 "parser.y"
+#line 1 "./parser-bison/parser.y"
 
-    #include "node.h"
+    #include "../node.hpp"
     NBlock *programBlock; /* the top level root node of our final AST */
 
     extern int yylex();
     void yyerror(const char *s) { printf("ERROR: %sn", s); }
 
-#line 79 "parser.cpp"
+#line 79 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -107,84 +107,58 @@ enum yysymbol_kind_t
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_TIDENTIFIER = 3,                /* TIDENTIFIER  */
-  YYSYMBOL_TFLOAT = 4,                     /* TFLOAT  */
-  YYSYMBOL_TINTEGER = 5,                   /* TINTEGER  */
-  YYSYMBOL_TSTRING = 6,                    /* TSTRING  */
-  YYSYMBOL_TTYPE_STRING = 7,               /* TTYPE_STRING  */
-  YYSYMBOL_TTYPE_INT = 8,                  /* TTYPE_INT  */
-  YYSYMBOL_TTYPE_FLOAT = 9,                /* TTYPE_FLOAT  */
-  YYSYMBOL_TTYPE_VOID = 10,                /* TTYPE_VOID  */
-  YYSYMBOL_TEQUAL = 11,                    /* TEQUAL  */
-  YYSYMBOL_TNOT = 12,                      /* TNOT  */
-  YYSYMBOL_TCEQ = 13,                      /* TCEQ  */
-  YYSYMBOL_TCNE = 14,                      /* TCNE  */
-  YYSYMBOL_TCLT = 15,                      /* TCLT  */
-  YYSYMBOL_TCLE = 16,                      /* TCLE  */
-  YYSYMBOL_TCGT = 17,                      /* TCGT  */
-  YYSYMBOL_TCGE = 18,                      /* TCGE  */
-  YYSYMBOL_TLPAREN = 19,                   /* TLPAREN  */
-  YYSYMBOL_TRPAREN = 20,                   /* TRPAREN  */
-  YYSYMBOL_TLBRACE = 21,                   /* TLBRACE  */
-  YYSYMBOL_TRBRACE = 22,                   /* TRBRACE  */
-  YYSYMBOL_TDOT = 23,                      /* TDOT  */
-  YYSYMBOL_TCOMMA = 24,                    /* TCOMMA  */
-  YYSYMBOL_TPLUS = 25,                     /* TPLUS  */
-  YYSYMBOL_TMINUS = 26,                    /* TMINUS  */
-  YYSYMBOL_TMUL = 27,                      /* TMUL  */
-  YYSYMBOL_TDIV = 28,                      /* TDIV  */
-  YYSYMBOL_TINC = 29,                      /* TINC  */
-  YYSYMBOL_TDEC = 30,                      /* TDEC  */
-  YYSYMBOL_TADD_ASSIGN = 31,               /* TADD_ASSIGN  */
-  YYSYMBOL_TSUB_ASSIGN = 32,               /* TSUB_ASSIGN  */
-  YYSYMBOL_TMUL_ASSIGN = 33,               /* TMUL_ASSIGN  */
-  YYSYMBOL_TDIV_ASSIGN = 34,               /* TDIV_ASSIGN  */
-  YYSYMBOL_TMOD_ASSIGN = 35,               /* TMOD_ASSIGN  */
-  YYSYMBOL_TAND = 36,                      /* TAND  */
-  YYSYMBOL_TOR = 37,                       /* TOR  */
-  YYSYMBOL_TDOUBLE_COLON = 38,             /* TDOUBLE_COLON  */
-  YYSYMBOL_TSEMICOLON = 39,                /* TSEMICOLON  */
-  YYSYMBOL_TARROW = 40,                    /* TARROW  */
-  YYSYMBOL_TSYM_PRINT = 41,                /* TSYM_PRINT  */
-  YYSYMBOL_TSYM_READ = 42,                 /* TSYM_READ  */
-  YYSYMBOL_TSYM_IF = 43,                   /* TSYM_IF  */
-  YYSYMBOL_TSYM_ELSE = 44,                 /* TSYM_ELSE  */
-  YYSYMBOL_TSYM_WHILE = 45,                /* TSYM_WHILE  */
-  YYSYMBOL_TSYM_FN = 46,                   /* TSYM_FN  */
-  YYSYMBOL_TSYM_CALL = 47,                 /* TSYM_CALL  */
-  YYSYMBOL_TSYM_RESULT = 48,               /* TSYM_RESULT  */
-  YYSYMBOL_TSYM_GUARD = 49,                /* TSYM_GUARD  */
-  YYSYMBOL_YYACCEPT = 50,                  /* $accept  */
-  YYSYMBOL_program = 51,                   /* program  */
-  YYSYMBOL_block = 52,                     /* block  */
-  YYSYMBOL_stmts = 53,                     /* stmts  */
-  YYSYMBOL_stmt = 54,                      /* stmt  */
-  YYSYMBOL_assign_op = 55,                 /* assign_op  */
-  YYSYMBOL_var_type = 56,                  /* var_type  */
-  YYSYMBOL_var_decl = 57,                  /* var_decl  */
-  YYSYMBOL_var_assign = 58,                /* var_assign  */
-  YYSYMBOL_print = 59,                     /* print  */
-  YYSYMBOL_while_stmt = 60,                /* while_stmt  */
-  YYSYMBOL_if_stmt = 61,                   /* if_stmt  */
-  YYSYMBOL_rel_expr = 62,                  /* rel_expr  */
-  YYSYMBOL_expr = 63,                      /* expr  */
-  YYSYMBOL_term = 64,                      /* term  */
-  YYSYMBOL_factor = 65,                    /* factor  */
-  YYSYMBOL_ident = 66,                     /* ident  */
-  YYSYMBOL_rel_expr_op = 67,               /* rel_expr_op  */
-  YYSYMBOL_expr_op = 68,                   /* expr_op  */
-  YYSYMBOL_term_op = 69,                   /* term_op  */
-  YYSYMBOL_unary_op = 70,                  /* unary_op  */
-  YYSYMBOL_factor_var = 71,                /* factor_var  */
-  YYSYMBOL_func_block = 72,                /* func_block  */
-  YYSYMBOL_func_stmts = 73,                /* func_stmts  */
-  YYSYMBOL_func_stmt = 74,                 /* func_stmt  */
-  YYSYMBOL_call_args = 75,                 /* call_args  */
-  YYSYMBOL_arg_decl = 76,                  /* arg_decl  */
-  YYSYMBOL_func_decl_args = 77,            /* func_decl_args  */
-  YYSYMBOL_func_decl = 78,                 /* func_decl  */
-  YYSYMBOL_arg_name = 79,                  /* arg_name  */
-  YYSYMBOL_func_arg_name = 80,             /* func_arg_name  */
-  YYSYMBOL_func_assign = 81                /* func_assign  */
+  YYSYMBOL_TINTEGER = 4,                   /* TINTEGER  */
+  YYSYMBOL_TFLOAT = 5,                     /* TFLOAT  */
+  YYSYMBOL_TTYPE_INT = 6,                  /* TTYPE_INT  */
+  YYSYMBOL_TLPAREN = 7,                    /* TLPAREN  */
+  YYSYMBOL_TRPAREN = 8,                    /* TRPAREN  */
+  YYSYMBOL_TLBRACE = 9,                    /* TLBRACE  */
+  YYSYMBOL_TRBRACE = 10,                   /* TRBRACE  */
+  YYSYMBOL_TIF = 11,                       /* TIF  */
+  YYSYMBOL_TELSE = 12,                     /* TELSE  */
+  YYSYMBOL_TPLUS = 13,                     /* TPLUS  */
+  YYSYMBOL_TMINUS = 14,                    /* TMINUS  */
+  YYSYMBOL_TMUL = 15,                      /* TMUL  */
+  YYSYMBOL_TDIV = 16,                      /* TDIV  */
+  YYSYMBOL_TEQUAL = 17,                    /* TEQUAL  */
+  YYSYMBOL_TNOT = 18,                      /* TNOT  */
+  YYSYMBOL_TCEQ = 19,                      /* TCEQ  */
+  YYSYMBOL_TCNE = 20,                      /* TCNE  */
+  YYSYMBOL_TCGT = 21,                      /* TCGT  */
+  YYSYMBOL_TCGE = 22,                      /* TCGE  */
+  YYSYMBOL_TCLT = 23,                      /* TCLT  */
+  YYSYMBOL_TCLE = 24,                      /* TCLE  */
+  YYSYMBOL_TAND = 25,                      /* TAND  */
+  YYSYMBOL_TOR = 26,                       /* TOR  */
+  YYSYMBOL_TSEMICOLON = 27,                /* TSEMICOLON  */
+  YYSYMBOL_TCOLON = 28,                    /* TCOLON  */
+  YYSYMBOL_TARROW = 29,                    /* TARROW  */
+  YYSYMBOL_TCOMMA = 30,                    /* TCOMMA  */
+  YYSYMBOL_TLET = 31,                      /* TLET  */
+  YYSYMBOL_TFN = 32,                       /* TFN  */
+  YYSYMBOL_TCALL = 33,                     /* TCALL  */
+  YYSYMBOL_TRESULT = 34,                   /* TRESULT  */
+  YYSYMBOL_YYACCEPT = 35,                  /* $accept  */
+  YYSYMBOL_program = 36,                   /* program  */
+  YYSYMBOL_stmts = 37,                     /* stmts  */
+  YYSYMBOL_stmt = 38,                      /* stmt  */
+  YYSYMBOL_var_decl = 39,                  /* var_decl  */
+  YYSYMBOL_var_type = 40,                  /* var_type  */
+  YYSYMBOL_ident = 41,                     /* ident  */
+  YYSYMBOL_var_assign = 42,                /* var_assign  */
+  YYSYMBOL_if_stmt = 43,                   /* if_stmt  */
+  YYSYMBOL_fn_block = 44,                  /* fn_block  */
+  YYSYMBOL_fn_stmts = 45,                  /* fn_stmts  */
+  YYSYMBOL_fn_stmt = 46,                   /* fn_stmt  */
+  YYSYMBOL_fn_decl = 47,                   /* fn_decl  */
+  YYSYMBOL_fn_decl_args = 48,              /* fn_decl_args  */
+  YYSYMBOL_fn_var_decl = 49,               /* fn_var_decl  */
+  YYSYMBOL_fn_call_args = 50,              /* fn_call_args  */
+  YYSYMBOL_rel_expr = 51,                  /* rel_expr  */
+  YYSYMBOL_expr = 52,                      /* expr  */
+  YYSYMBOL_term = 53,                      /* term  */
+  YYSYMBOL_factor = 54,                    /* factor  */
+  YYSYMBOL_factor_var = 55                 /* factor_var  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -301,7 +275,7 @@ typedef int yytype_uint16;
 
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_uint8 yy_state_t;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -510,21 +484,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  36
+#define YYFINAL  33
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   167
+#define YYLAST   175
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  50
+#define YYNTOKENS  35
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  32
+#define YYNNTS  21
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  95
+#define YYNRULES  54
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  152
+#define YYNSTATES  104
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   304
+#define YYMAXUTOK   289
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -566,25 +540,19 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
-      45,    46,    47,    48,    49
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    64,    64,    67,    68,    71,    72,    77,    78,    79,
-      80,    81,    82,    83,    84,    85,    86,    87,    88,    91,
-      91,    91,    92,    92,    92,    92,    95,    95,    95,    98,
-      99,   102,   103,   106,   109,   112,   113,   118,   119,   122,
-     123,   126,   127,   129,   130,   131,   132,   133,   134,   137,
-     140,   140,   140,   140,   140,   140,   140,   143,   143,   143,
-     146,   146,   146,   149,   149,   149,   152,   153,   154,   158,
-     159,   162,   163,   166,   167,   168,   169,   170,   173,   174,
-     175,   178,   179,   183,   184,   187,   189,   191,   193,   197,
-     200,   201,   204,   205,   206,   207
+       0,    59,    59,    66,    67,    71,    72,    73,    74,    75,
+      78,    79,    82,    84,    86,    88,    89,    94,    96,    97,
+     100,   101,   102,   105,   109,   110,   111,   114,   117,   118,
+     119,   123,   124,   125,   126,   127,   128,   129,   132,   133,
+     134,   135,   138,   139,   140,   141,   144,   145,   146,   147,
+     148,   149,   150,   151,   154
 };
 #endif
 
@@ -601,20 +569,14 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "TIDENTIFIER",
-  "TFLOAT", "TINTEGER", "TSTRING", "TTYPE_STRING", "TTYPE_INT",
-  "TTYPE_FLOAT", "TTYPE_VOID", "TEQUAL", "TNOT", "TCEQ", "TCNE", "TCLT",
-  "TCLE", "TCGT", "TCGE", "TLPAREN", "TRPAREN", "TLBRACE", "TRBRACE",
-  "TDOT", "TCOMMA", "TPLUS", "TMINUS", "TMUL", "TDIV", "TINC", "TDEC",
-  "TADD_ASSIGN", "TSUB_ASSIGN", "TMUL_ASSIGN", "TDIV_ASSIGN",
-  "TMOD_ASSIGN", "TAND", "TOR", "TDOUBLE_COLON", "TSEMICOLON", "TARROW",
-  "TSYM_PRINT", "TSYM_READ", "TSYM_IF", "TSYM_ELSE", "TSYM_WHILE",
-  "TSYM_FN", "TSYM_CALL", "TSYM_RESULT", "TSYM_GUARD", "$accept",
-  "program", "block", "stmts", "stmt", "assign_op", "var_type", "var_decl",
-  "var_assign", "print", "while_stmt", "if_stmt", "rel_expr", "expr",
-  "term", "factor", "ident", "rel_expr_op", "expr_op", "term_op",
-  "unary_op", "factor_var", "func_block", "func_stmts", "func_stmt",
-  "call_args", "arg_decl", "func_decl_args", "func_decl", "arg_name",
-  "func_arg_name", "func_assign", YY_NULLPTR
+  "TINTEGER", "TFLOAT", "TTYPE_INT", "TLPAREN", "TRPAREN", "TLBRACE",
+  "TRBRACE", "TIF", "TELSE", "TPLUS", "TMINUS", "TMUL", "TDIV", "TEQUAL",
+  "TNOT", "TCEQ", "TCNE", "TCGT", "TCGE", "TCLT", "TCLE", "TAND", "TOR",
+  "TSEMICOLON", "TCOLON", "TARROW", "TCOMMA", "TLET", "TFN", "TCALL",
+  "TRESULT", "$accept", "program", "stmts", "stmt", "var_decl", "var_type",
+  "ident", "var_assign", "if_stmt", "fn_block", "fn_stmts", "fn_stmt",
+  "fn_decl", "fn_decl_args", "fn_var_decl", "fn_call_args", "rel_expr",
+  "expr", "term", "factor", "factor_var", YY_NULLPTR
 };
 
 static const char *
@@ -624,7 +586,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-103)
+#define YYPACT_NINF (-41)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -638,22 +600,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      86,  -103,   -15,    65,    65,    21,    26,    86,  -103,    19,
-      28,    34,    39,    41,   107,    53,    61,    65,  -103,  -103,
-    -103,  -103,    65,  -103,  -103,    27,    21,    24,   131,    49,
-      15,  -103,    65,  -103,    24,     6,  -103,  -103,  -103,  -103,
-    -103,  -103,  -103,    65,  -103,  -103,  -103,  -103,  -103,  -103,
-    -103,    65,    29,  -103,  -103,    82,    83,    85,    94,    63,
-      -9,  -103,  -103,  -103,  -103,  -103,  -103,  -103,    65,  -103,
-    -103,  -103,    65,  -103,  -103,  -103,    65,  -103,  -103,    98,
-      13,    14,  -103,  -103,    17,  -103,  -103,    65,  -103,  -103,
-    -103,    65,  -103,    79,    24,  -103,  -103,  -103,     7,  -103,
-     112,    52,  -103,  -103,  -103,    88,  -103,   102,   -10,    98,
-      21,  -103,  -103,    59,  -103,  -103,  -103,    77,    65,  -103,
-      16,  -103,    98,   146,  -103,  -103,   126,   126,   143,  -103,
-    -103,  -103,    65,  -103,    65,   116,  -103,  -103,  -103,    98,
-    -103,   102,  -103,  -103,  -103,   119,  -103,    65,  -103,  -103,
-     120,  -103
+      95,   -41,   -41,    51,    51,    51,    51,    51,    -1,    -1,
+      -1,     3,    95,   -41,   -16,    19,    -8,   -41,   -41,   118,
+      16,    37,   -41,   -41,    15,    96,   112,   -41,   -41,   -41,
+      10,    -1,    32,   -41,   -41,   -41,    51,    51,   -41,    51,
+      51,    51,    51,    51,    51,   -41,    51,    51,    51,    51,
+      51,    51,   -41,    63,    29,    57,    40,    -7,   -41,    51,
+       1,   145,   145,    16,    16,    16,    16,    16,    16,    37,
+      37,    37,   -41,   -41,   -41,    51,    42,   -41,    14,   -41,
+      64,   -41,    58,    57,    64,    -1,     7,   -41,    51,   127,
+      51,   -41,   -41,   -41,    51,   -41,   -41,   -41,   -41,   145,
+     -41,   136,   145,   -41
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -661,137 +618,119 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       7,    49,     0,     0,     0,     0,     0,     2,     5,     0,
-       0,     0,    11,    13,     0,    15,    17,     0,    67,    66,
-      68,    63,     0,    65,    64,     0,     0,     0,    37,    39,
-      41,    45,     0,    44,     0,     0,     1,     6,     9,     8,
-      10,    12,    14,     0,    24,    25,    19,    20,    21,    22,
-      23,     0,    29,    16,    18,     0,     0,     0,     0,     0,
-      35,    50,    51,    52,    53,    54,    55,    56,     0,    57,
-      58,    59,     0,    60,    61,    62,     0,    43,    34,     0,
-       0,     0,    89,    90,     0,    31,    32,     0,    33,    46,
-      47,    78,     4,     0,     0,    38,    40,    42,     0,    92,
-       0,     0,    28,    26,    27,     0,    81,    83,     0,     0,
-       0,    30,    79,     0,     3,    36,    70,     0,     0,    73,
-       0,    71,     0,     0,    88,    87,     0,     0,     0,    94,
-      91,    48,     0,    74,     0,     0,    69,    72,    93,     0,
-      82,    84,    86,    85,    80,     0,    76,     0,    95,    75,
-       0,    77
+       0,    13,    54,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     2,     3,     0,    50,     0,     9,     8,     0,
+      37,    41,    45,    53,    50,     0,     0,    47,    48,    49,
+       0,    24,     0,     1,     4,     6,    28,     0,     7,     0,
+       0,     0,     0,     0,     0,     5,     0,     0,     0,     0,
+       0,     0,    46,     0,    15,     0,     0,     0,    25,    28,
+       0,    29,    14,    31,    32,    33,    34,    35,    36,    38,
+      39,    40,    42,    43,    44,     0,     0,    20,     0,    18,
+       0,    12,    10,     0,     0,     0,     0,    52,     0,     0,
+       0,    17,    19,    16,     0,    27,    23,    26,    51,    30,
+      22,     0,    11,    21
 };
 
 /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-    -103,  -103,   -31,   101,    -5,  -103,   -94,  -103,  -103,  -103,
-    -103,  -103,    -4,   -56,    89,   -27,     1,  -103,  -103,  -103,
-    -103,  -103,  -102,  -103,    42,  -103,    36,  -103,  -103,    54,
-      87,  -103
+     -41,   -41,   -41,     8,   -41,    -5,     4,   -41,   -41,   -40,
+     -41,     2,   -41,   -41,    -6,    24,    -3,   131,    13,     0,
+     -41
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     6,    60,     7,     8,    51,   106,     9,    10,    11,
-      12,    13,    27,    28,    29,    30,    31,    68,    72,    76,
-      32,    33,    99,   120,   121,   113,   107,   108,    15,    83,
-      84,    16
+       0,    11,    12,    77,    14,    82,    24,    16,    17,    54,
+      78,    79,    18,    57,    58,    60,    19,    20,    21,    22,
+      23
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule whose
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint8 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      34,    14,    37,    78,    17,    77,    35,   129,    14,     1,
-       1,   125,    95,    55,   127,    52,     1,    79,    56,     1,
-     138,   102,   103,   104,     1,    80,    36,    58,   109,   116,
-     128,   111,   140,   100,   143,    94,    82,   148,   136,    85,
-      87,   110,    73,    74,    81,    59,    57,    86,     2,    97,
-       3,    75,     4,     5,   105,   117,   118,     2,    38,     3,
-      14,     4,     5,   115,   117,   118,     1,    39,     1,    18,
-      19,    20,   123,    40,    69,    70,   110,    21,    41,   131,
-      42,    82,     1,   132,    22,    92,    71,   112,    37,     1,
-      23,    24,    53,   119,    14,   102,   103,   104,   124,    14,
-      54,   114,    88,    89,     2,    90,     3,    25,     4,     5,
-       1,    82,    26,    91,   135,   119,   133,   134,    43,    98,
-       2,    14,     3,   122,     4,     5,   126,     2,   144,     3,
-     145,     4,     5,   102,   103,   104,    44,    45,    46,    47,
-      48,    49,    50,   150,    61,    62,    63,    64,    65,    66,
-     102,   103,   104,   142,    67,   146,   147,   139,   149,   151,
-      93,    96,   137,   141,   130,     0,     0,   101
+      25,    26,     1,    33,    15,    27,    28,    29,    13,    87,
+      84,    35,    30,    31,    32,    98,    15,     1,     2,    38,
+      34,     3,    36,    85,    91,     4,    36,     5,     6,    46,
+      47,    88,     7,    61,    62,    56,    37,    88,    55,    59,
+      93,    80,    48,    75,    96,     8,     9,    10,    76,    72,
+      73,    74,    49,    50,     1,     2,    61,    15,     3,    69,
+      70,    71,    51,    81,     5,     6,     1,     2,    83,     7,
+       3,    90,    89,    53,     4,    94,     5,     6,    95,    97,
+      92,     7,    15,    86,    10,    99,     0,   101,     0,    56,
+       0,   102,    75,     0,     8,     9,    10,    76,     1,     2,
+       0,     0,     3,     0,    52,     0,     4,     0,     5,     6,
+       0,     0,     0,     7,     0,    39,    40,    41,    42,    43,
+      44,    53,     0,     0,     0,     0,     8,     9,    10,     0,
+       0,    39,    40,    41,    42,    43,    44,    39,    40,    41,
+      42,    43,    44,     0,     0,    45,    39,    40,    41,    42,
+      43,    44,     0,     0,   100,    39,    40,    41,    42,    43,
+      44,     0,     0,   103,    39,    40,    41,    42,    43,    44,
+      63,    64,    65,    66,    67,    68
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       4,     0,     7,    34,    19,    32,     5,   109,     7,     3,
-       3,   105,    68,    17,    24,    14,     3,    11,    22,     3,
-     122,     7,     8,     9,     3,    19,     0,    26,    11,    22,
-      40,    87,   126,    20,   128,    44,    35,   139,    22,    43,
-      11,    24,    27,    28,    38,    21,    19,    51,    41,    76,
-      43,    36,    45,    46,    40,    48,    49,    41,    39,    43,
-      59,    45,    46,    94,    48,    49,     3,    39,     3,     4,
-       5,     6,    20,    39,    25,    26,    24,    12,    39,    20,
-      39,    80,     3,    24,    19,    22,    37,    91,    93,     3,
-      25,    26,    39,    98,    93,     7,     8,     9,    10,    98,
-      39,    22,    20,    20,    41,    20,    43,    42,    45,    46,
-       3,   110,    47,    19,   118,   120,    39,    40,    11,    21,
-      41,   120,    43,    11,    45,    46,    24,    41,   132,    43,
-     134,    45,    46,     7,     8,     9,    29,    30,    31,    32,
-      33,    34,    35,   147,    13,    14,    15,    16,    17,    18,
-       7,     8,     9,    10,    23,    39,    40,    11,    39,    39,
-      59,    72,   120,   127,   110,    -1,    -1,    80
+       3,     4,     3,     0,     0,     5,     6,     7,     0,     8,
+      17,    27,     8,     9,    10,     8,    12,     3,     4,    27,
+      12,     7,     7,    30,    10,    11,     7,    13,    14,    13,
+      14,    30,    18,    36,    37,    31,    17,    30,    28,     7,
+      80,    12,    26,    29,    84,    31,    32,    33,    34,    49,
+      50,    51,    15,    16,     3,     4,    59,    53,     7,    46,
+      47,    48,    25,     6,    13,    14,     3,     4,    28,    18,
+       7,    29,    75,     9,    11,    17,    13,    14,    83,    85,
+      78,    18,    78,    59,    33,    88,    -1,    90,    -1,    85,
+      -1,    94,    29,    -1,    31,    32,    33,    34,     3,     4,
+      -1,    -1,     7,    -1,     8,    -1,    11,    -1,    13,    14,
+      -1,    -1,    -1,    18,    -1,    19,    20,    21,    22,    23,
+      24,     9,    -1,    -1,    -1,    -1,    31,    32,    33,    -1,
+      -1,    19,    20,    21,    22,    23,    24,    19,    20,    21,
+      22,    23,    24,    -1,    -1,    27,    19,    20,    21,    22,
+      23,    24,    -1,    -1,    27,    19,    20,    21,    22,    23,
+      24,    -1,    -1,    27,    19,    20,    21,    22,    23,    24,
+      39,    40,    41,    42,    43,    44
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    41,    43,    45,    46,    51,    53,    54,    57,
-      58,    59,    60,    61,    66,    78,    81,    19,     4,     5,
-       6,    12,    19,    25,    26,    42,    47,    62,    63,    64,
-      65,    66,    70,    71,    62,    66,     0,    54,    39,    39,
-      39,    39,    39,    11,    29,    30,    31,    32,    33,    34,
-      35,    55,    66,    39,    39,    62,    62,    19,    66,    21,
-      52,    13,    14,    15,    16,    17,    18,    23,    67,    25,
-      26,    37,    68,    27,    28,    36,    69,    65,    52,    11,
-      19,    38,    66,    79,    80,    62,    62,    11,    20,    20,
-      20,    19,    22,    53,    44,    63,    64,    65,    21,    72,
-      20,    80,     7,     8,     9,    40,    56,    76,    77,    11,
-      24,    63,    62,    75,    22,    52,    22,    48,    49,    54,
-      73,    74,    11,    20,    10,    56,    24,    24,    40,    72,
-      79,    20,    24,    39,    40,    62,    22,    74,    72,    11,
-      56,    76,    10,    56,    62,    62,    39,    40,    72,    39,
-      62,    39
+       0,     3,     4,     7,    11,    13,    14,    18,    31,    32,
+      33,    36,    37,    38,    39,    41,    42,    43,    47,    51,
+      52,    53,    54,    55,    41,    51,    51,    54,    54,    54,
+      41,    41,    41,     0,    38,    27,     7,    17,    27,    19,
+      20,    21,    22,    23,    24,    27,    13,    14,    26,    15,
+      16,    25,     8,     9,    44,    28,    41,    48,    49,     7,
+      50,    51,    51,    52,    52,    52,    52,    52,    52,    53,
+      53,    53,    54,    54,    54,    29,    34,    38,    45,    46,
+      12,     6,    40,    28,    17,    30,    50,     8,    30,    51,
+      29,    10,    46,    44,    17,    40,    44,    49,     8,    51,
+      27,    51,    51,    27
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    50,    51,    52,    52,    53,    53,    54,    54,    54,
-      54,    54,    54,    54,    54,    54,    54,    54,    54,    55,
-      55,    55,    55,    55,    55,    55,    56,    56,    56,    57,
-      57,    58,    58,    59,    60,    61,    61,    62,    62,    63,
-      63,    64,    64,    65,    65,    65,    65,    65,    65,    66,
-      67,    67,    67,    67,    67,    67,    67,    68,    68,    68,
-      69,    69,    69,    70,    70,    70,    71,    71,    71,    72,
-      72,    73,    73,    74,    74,    74,    74,    74,    75,    75,
-      75,    76,    76,    77,    77,    78,    78,    78,    78,    79,
-      80,    80,    81,    81,    81,    81
+       0,    35,    36,    37,    37,    38,    38,    38,    38,    38,
+      39,    39,    40,    41,    42,    43,    43,    44,    45,    45,
+      46,    46,    46,    47,    48,    48,    48,    49,    50,    50,
+      50,    51,    51,    51,    51,    51,    51,    51,    52,    52,
+      52,    52,    53,    53,    53,    53,    54,    54,    54,    54,
+      54,    54,    54,    54,    55
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     3,     2,     1,     2,     0,     2,     2,
-       2,     1,     2,     1,     2,     1,     2,     1,     2,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     2,
-       4,     3,     3,     4,     3,     3,     5,     1,     3,     1,
-       3,     1,     3,     2,     1,     1,     3,     3,     5,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     3,
-       2,     1,     2,     1,     2,     4,     3,     5,     0,     1,
-       3,     1,     3,     1,     3,     6,     6,     5,     5,     1,
-       1,     3,     4,     6,     5,     7
+       0,     2,     1,     1,     2,     2,     2,     2,     1,     1,
+       4,     6,     1,     1,     3,     3,     5,     3,     1,     2,
+       1,     4,     3,     5,     0,     1,     3,     3,     0,     1,
+       3,     3,     3,     3,     3,     3,     3,     1,     3,     3,
+       3,     1,     3,     3,     3,     1,     3,     2,     2,     2,
+       1,     5,     4,     1,     1
 };
 
 
@@ -1255,319 +1194,265 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: stmts  */
-#line 64 "parser.y"
+#line 59 "./parser-bison/parser.y"
                 { programBlock = (yyvsp[0].block); }
-#line 1261 "parser.cpp"
+#line 1200 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 3: /* block: TLBRACE stmts TRBRACE  */
-#line 67 "parser.y"
-                              { (yyval.block) = (yyvsp[-1].block); }
-#line 1267 "parser.cpp"
-    break;
-
-  case 4: /* block: TLBRACE TRBRACE  */
-#line 68 "parser.y"
-                        { (yyval.block) = new NBlock(); }
-#line 1273 "parser.cpp"
-    break;
-
-  case 5: /* stmts: stmt  */
-#line 71 "parser.y"
+  case 3: /* stmts: stmt  */
+#line 66 "./parser-bison/parser.y"
              { (yyval.block) = new NBlock(); (yyval.block)->statements.push_back((yyvsp[0].stmt)); }
-#line 1279 "parser.cpp"
+#line 1206 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 6: /* stmts: stmts stmt  */
-#line 72 "parser.y"
+  case 4: /* stmts: stmts stmt  */
+#line 67 "./parser-bison/parser.y"
                    { (yyvsp[-1].block)->statements.push_back((yyvsp[0].stmt)); }
-#line 1285 "parser.cpp"
+#line 1212 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 7: /* stmt: %empty  */
-#line 77 "parser.y"
-                          { (yyval.stmt) = new NEmpty(); }
-#line 1291 "parser.cpp"
+  case 5: /* stmt: rel_expr TSEMICOLON  */
+#line 71 "./parser-bison/parser.y"
+                           { (yyval.stmt) = new NExpressionStatement(*(yyvsp[-1].expr)); }
+#line 1218 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 29: /* var_decl: ident ident  */
-#line 98 "parser.y"
-                       { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-1].ident), *(yyvsp[0].ident)); }
-#line 1297 "parser.cpp"
+  case 10: /* var_decl: TLET ident TCOLON var_type  */
+#line 78 "./parser-bison/parser.y"
+                                      { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-2].ident), (yyvsp[0].token)); }
+#line 1224 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 30: /* var_decl: ident ident TEQUAL expr  */
-#line 99 "parser.y"
-                                   { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-3].ident), *(yyvsp[-2].ident), (yyvsp[0].expr)); }
-#line 1303 "parser.cpp"
+  case 11: /* var_decl: TLET ident TCOLON var_type TEQUAL rel_expr  */
+#line 79 "./parser-bison/parser.y"
+                                                      { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-4].ident), (yyvsp[-2].token), (yyvsp[0].expr)); }
+#line 1230 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 31: /* var_assign: ident TEQUAL rel_expr  */
-#line 102 "parser.y"
+  case 13: /* ident: TIDENTIFIER  */
+#line 84 "./parser-bison/parser.y"
+                    { (yyval.ident) = new NIdentifier(*(yyvsp[0].string)); delete (yyvsp[0].string); }
+#line 1236 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 14: /* var_assign: ident TEQUAL rel_expr  */
+#line 86 "./parser-bison/parser.y"
                                    { (yyval.stmt) = new NAssignment(*(yyvsp[-2].ident), *(yyvsp[0].expr)); }
-#line 1309 "parser.cpp"
+#line 1242 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 32: /* var_assign: ident assign_op rel_expr  */
-#line 103 "parser.y"
-                                      { (yyval.stmt) = new NAssignment(*(yyvsp[-2].ident), (yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1315 "parser.cpp"
+  case 15: /* if_stmt: TIF rel_expr fn_block  */
+#line 88 "./parser-bison/parser.y"
+                                { (yyval.stmt) = new NIfStatement(*(yyvsp[-1].expr), *(yyvsp[0].block), *(new NBlock())); }
+#line 1248 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 33: /* print: TSYM_PRINT TLPAREN rel_expr TRPAREN  */
-#line 106 "parser.y"
-                                            { (yyval.stmt) = new NPrint(*(yyvsp[-1].expr)); }
-#line 1321 "parser.cpp"
+  case 16: /* if_stmt: TIF rel_expr fn_block TELSE fn_block  */
+#line 89 "./parser-bison/parser.y"
+                                               { (yyval.stmt) = new NIfStatement(*(yyvsp[-3].expr), *(yyvsp[-2].block), *(yyvsp[0].block)); }
+#line 1254 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 34: /* while_stmt: TSYM_WHILE rel_expr block  */
-#line 109 "parser.y"
-                                       { (yyval.stmt) = new NWhile(*(yyvsp[-1].expr), *(yyvsp[0].block)); }
-#line 1327 "parser.cpp"
+  case 17: /* fn_block: TLBRACE fn_stmts TRBRACE  */
+#line 94 "./parser-bison/parser.y"
+                                    { (yyval.block) = (yyvsp[-1].block); }
+#line 1260 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 35: /* if_stmt: TSYM_IF rel_expr block  */
-#line 112 "parser.y"
-                                 { (yyval.stmt) = new NIfStatement(*(yyvsp[-1].expr), *(yyvsp[0].block)); }
-#line 1333 "parser.cpp"
+  case 18: /* fn_stmts: fn_stmt  */
+#line 96 "./parser-bison/parser.y"
+                   { (yyval.block) = new NBlock(); (yyval.block)->statements.push_back((yyvsp[0].stmt)); }
+#line 1266 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 36: /* if_stmt: TSYM_IF rel_expr block TSYM_ELSE block  */
-#line 113 "parser.y"
-                                                 { (yyval.stmt) = new NIfStatement(*(yyvsp[-3].expr), *(yyvsp[-2].block), *(yyvsp[0].block)); }
-#line 1339 "parser.cpp"
+  case 19: /* fn_stmts: fn_stmts fn_stmt  */
+#line 97 "./parser-bison/parser.y"
+                            { (yyvsp[-1].block)->statements.push_back((yyvsp[0].stmt)); }
+#line 1272 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 38: /* rel_expr: expr rel_expr_op expr  */
-#line 119 "parser.y"
-                                 { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1345 "parser.cpp"
+  case 21: /* fn_stmt: TRESULT TARROW rel_expr TSEMICOLON  */
+#line 101 "./parser-bison/parser.y"
+                                             { (yyval.stmt) = new NResult(*(yyvsp[-1].expr)); }
+#line 1278 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 40: /* expr: term expr_op term  */
-#line 123 "parser.y"
-                         { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1351 "parser.cpp"
+  case 22: /* fn_stmt: TARROW rel_expr TSEMICOLON  */
+#line 102 "./parser-bison/parser.y"
+                                     { (yyval.stmt) = new NResult(*(yyvsp[-1].expr)); }
+#line 1284 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 42: /* term: factor term_op factor  */
-#line 127 "parser.y"
-                             { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1357 "parser.cpp"
+  case 23: /* fn_decl: TFN ident fn_decl_args TEQUAL fn_block  */
+#line 106 "./parser-bison/parser.y"
+        { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-3].ident), *(yyvsp[-2].varvec), *(yyvsp[0].block)); delete (yyvsp[-2].varvec); }
+#line 1290 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 43: /* factor: unary_op factor  */
-#line 129 "parser.y"
-                         { (yyval.expr) = new NUnaryOperator((yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1363 "parser.cpp"
+  case 24: /* fn_decl_args: %empty  */
+#line 109 "./parser-bison/parser.y"
+                          { (yyval.varvec) = new VariableList(); }
+#line 1296 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 45: /* factor: ident  */
-#line 131 "parser.y"
-               { (yyval.ident) = (yyvsp[0].ident); }
-#line 1369 "parser.cpp"
+  case 25: /* fn_decl_args: fn_var_decl  */
+#line 110 "./parser-bison/parser.y"
+                      { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[0].var_decl)); }
+#line 1302 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 26: /* fn_decl_args: fn_decl_args TCOMMA fn_var_decl  */
+#line 111 "./parser-bison/parser.y"
+                                          { (yyvsp[-2].varvec)->push_back((yyvsp[0].var_decl)); }
+#line 1308 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 27: /* fn_var_decl: ident TCOLON var_type  */
+#line 114 "./parser-bison/parser.y"
+                                     { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-2].ident), (yyvsp[0].token), nullptr); }
+#line 1314 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 28: /* fn_call_args: %empty  */
+#line 117 "./parser-bison/parser.y"
+                         { (yyval.exprvec) = new ExpressionList(); }
+#line 1320 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 29: /* fn_call_args: rel_expr  */
+#line 118 "./parser-bison/parser.y"
+                        { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].expr)); }
+#line 1326 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 30: /* fn_call_args: fn_call_args TCOMMA rel_expr  */
+#line 119 "./parser-bison/parser.y"
+                                            { (yyvsp[-2].exprvec)->push_back((yyvsp[0].expr)); }
+#line 1332 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 31: /* rel_expr: rel_expr TCEQ expr  */
+#line 123 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1338 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 32: /* rel_expr: rel_expr TCNE expr  */
+#line 124 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1344 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 33: /* rel_expr: rel_expr TCGT expr  */
+#line 125 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1350 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 34: /* rel_expr: rel_expr TCGE expr  */
+#line 126 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1356 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 35: /* rel_expr: rel_expr TCLT expr  */
+#line 127 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1362 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 36: /* rel_expr: rel_expr TCLE expr  */
+#line 128 "./parser-bison/parser.y"
+                              { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1368 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 38: /* expr: expr TPLUS term  */
+#line 132 "./parser-bison/parser.y"
+                       { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1374 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 39: /* expr: expr TMINUS term  */
+#line 133 "./parser-bison/parser.y"
+                        { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1380 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 40: /* expr: expr TOR term  */
+#line 134 "./parser-bison/parser.y"
+                     { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1386 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 42: /* term: term TMUL factor  */
+#line 138 "./parser-bison/parser.y"
+                        { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1392 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 43: /* term: term TDIV factor  */
+#line 139 "./parser-bison/parser.y"
+                        { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1398 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
+    break;
+
+  case 44: /* term: term TAND factor  */
+#line 140 "./parser-bison/parser.y"
+                        { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1404 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
   case 46: /* factor: TLPAREN rel_expr TRPAREN  */
-#line 132 "parser.y"
+#line 144 "./parser-bison/parser.y"
                                   { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1375 "parser.cpp"
+#line 1410 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 47: /* factor: TSYM_READ TLPAREN TRPAREN  */
-#line 133 "parser.y"
-                                   { (yyval.expr) = new NRead(); }
-#line 1381 "parser.cpp"
+  case 47: /* factor: TPLUS factor  */
+#line 145 "./parser-bison/parser.y"
+                      { (yyval.expr) = new NUnaryOperator((yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1416 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 48: /* factor: TSYM_CALL ident TLPAREN call_args TRPAREN  */
-#line 134 "parser.y"
-                                                   { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
-#line 1387 "parser.cpp"
+  case 48: /* factor: TMINUS factor  */
+#line 146 "./parser-bison/parser.y"
+                       { (yyval.expr) = new NUnaryOperator((yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1422 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 49: /* ident: TIDENTIFIER  */
-#line 137 "parser.y"
-                    { (yyval.ident) = new NIdentifier(*(yyvsp[0].string)); delete (yyvsp[0].string); }
-#line 1393 "parser.cpp"
+  case 49: /* factor: TNOT factor  */
+#line 147 "./parser-bison/parser.y"
+                     { (yyval.expr) = new NUnaryOperator((yyvsp[-1].token), *(yyvsp[0].expr)); }
+#line 1428 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 66: /* factor_var: TINTEGER  */
-#line 152 "parser.y"
-                      { (yyval.expr) = new NInteger(atol((yyvsp[0].string)->c_str())); delete (yyvsp[0].string);}
-#line 1399 "parser.cpp"
+  case 50: /* factor: ident  */
+#line 148 "./parser-bison/parser.y"
+               { (yyval.ident) = (yyvsp[0].ident); }
+#line 1434 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 67: /* factor_var: TFLOAT  */
-#line 153 "parser.y"
-                    { (yyval.expr) = new NFloat(atof((yyvsp[0].string)->c_str())); delete (yyvsp[0].string);}
-#line 1405 "parser.cpp"
+  case 51: /* factor: TCALL ident TLPAREN fn_call_args TRPAREN  */
+#line 149 "./parser-bison/parser.y"
+                                                  { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
+#line 1440 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 68: /* factor_var: TSTRING  */
-#line 154 "parser.y"
-                     { (yyval.expr) = new NString(*(yyvsp[0].string)); delete (yyvsp[0].string); }
-#line 1411 "parser.cpp"
+  case 52: /* factor: ident TLPAREN fn_call_args TRPAREN  */
+#line 150 "./parser-bison/parser.y"
+                                            { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
+#line 1446 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
-  case 69: /* func_block: TLBRACE func_stmts TRBRACE  */
-#line 158 "parser.y"
-                                        { (yyval.block) = (yyvsp[-1].block); }
-#line 1417 "parser.cpp"
-    break;
-
-  case 70: /* func_block: TLBRACE TRBRACE  */
-#line 159 "parser.y"
-                             { (yyval.block) = new NBlock(); }
-#line 1423 "parser.cpp"
-    break;
-
-  case 71: /* func_stmts: func_stmt  */
-#line 162 "parser.y"
-                       { (yyval.block) = new NBlock(); (yyval.block)->statements.push_back((yyvsp[0].stmt)); }
-#line 1429 "parser.cpp"
-    break;
-
-  case 72: /* func_stmts: func_stmts func_stmt  */
-#line 163 "parser.y"
-                             { (yyvsp[-1].block)->statements.push_back((yyvsp[0].stmt)); }
-#line 1435 "parser.cpp"
-    break;
-
-  case 74: /* func_stmt: TSYM_RESULT TSEMICOLON  */
-#line 167 "parser.y"
-                                   { (yyval.stmt) = new NResult(); }
-#line 1441 "parser.cpp"
-    break;
-
-  case 75: /* func_stmt: TSYM_RESULT TARROW rel_expr TSEMICOLON  */
-#line 168 "parser.y"
-                                                   { (yyval.stmt) = new NResult(*(yyvsp[-1].expr)); }
-#line 1447 "parser.cpp"
-    break;
-
-  case 76: /* func_stmt: TSYM_GUARD rel_expr TSEMICOLON  */
-#line 169 "parser.y"
-                                           { (yyval.stmt) = new NGuard(*(yyvsp[-1].expr)); }
-#line 1453 "parser.cpp"
-    break;
-
-  case 77: /* func_stmt: TSYM_GUARD rel_expr TARROW rel_expr TSEMICOLON  */
-#line 170 "parser.y"
-                                                           { (yyval.stmt) = new NGuard(*(yyvsp[-3].expr), *(yyvsp[-1].expr)); }
-#line 1459 "parser.cpp"
-    break;
-
-  case 78: /* call_args: %empty  */
-#line 173 "parser.y"
-                              { (yyval.exprvec) = new ExpressionList(); }
-#line 1465 "parser.cpp"
-    break;
-
-  case 79: /* call_args: rel_expr  */
-#line 174 "parser.y"
-                     { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].expr)); }
-#line 1471 "parser.cpp"
-    break;
-
-  case 80: /* call_args: call_args TCOMMA rel_expr  */
-#line 175 "parser.y"
-                                       { (yyvsp[-2].exprvec)->push_back((yyvsp[0].expr)); }
-#line 1477 "parser.cpp"
-    break;
-
-  case 81: /* arg_decl: var_type  */
-#line 178 "parser.y"
-                    { (yyval.stmt) = new NArgDeclaration(*(yyvsp[0].token)); }
-#line 1483 "parser.cpp"
-    break;
-
-  case 82: /* arg_decl: arg_decl TCOMMA var_type  */
-#line 179 "parser.y"
-                                    { (yyval.stmt) = new NArgDeclaration(*(yyvsp[0].token)); }
-#line 1489 "parser.cpp"
-    break;
-
-  case 83: /* func_decl_args: arg_decl  */
-#line 183 "parser.y"
-                          { (yyval.arg_type_vec) = new ArgTypeList(); (yyval.arg_type_vec)->push_back((yyvsp[0].arg_decl)); }
-#line 1495 "parser.cpp"
-    break;
-
-  case 84: /* func_decl_args: func_decl_args TCOMMA arg_decl  */
-#line 184 "parser.y"
-                                                { (yyvsp[-2].arg_type_vec)->push_back((yyvsp[0].arg_decl)); }
-#line 1501 "parser.cpp"
-    break;
-
-  case 85: /* func_decl: TSYM_FN ident TDOUBLE_COLON func_decl_args TARROW var_type  */
-#line 188 "parser.y"
-            { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-4].ident), *(yyvsp[-2].arg_type_vec), *(yyvsp[0].token)); delete (yyvsp[-2].arg_type_vec); }
-#line 1507 "parser.cpp"
-    break;
-
-  case 86: /* func_decl: TSYM_FN ident TDOUBLE_COLON func_decl_args TARROW TTYPE_VOID  */
-#line 190 "parser.y"
-            { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-4].ident), *(yyvsp[-2].arg_type_vec)); delete (yyvsp[-2].arg_type_vec); }
-#line 1513 "parser.cpp"
-    break;
-
-  case 87: /* func_decl: TSYM_FN ident TDOUBLE_COLON TARROW var_type  */
-#line 192 "parser.y"
-            { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-3].ident), *(yyvsp[0].token)); }
-#line 1519 "parser.cpp"
-    break;
-
-  case 88: /* func_decl: TSYM_FN ident TDOUBLE_COLON TARROW TTYPE_VOID  */
-#line 194 "parser.y"
-            { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-3].ident)); }
-#line 1525 "parser.cpp"
-    break;
-
-  case 89: /* arg_name: ident  */
-#line 197 "parser.y"
-                 { (yyval.ident) = new NArgument(*(yyvsp[0].ident)); }
-#line 1531 "parser.cpp"
-    break;
-
-  case 90: /* func_arg_name: arg_name  */
-#line 200 "parser.y"
-                         { (yyval.arg_name_vec) = new ArgList(); (yyval.arg_name_vec)->push_back((yyvsp[0].arg_name)); }
-#line 1537 "parser.cpp"
-    break;
-
-  case 91: /* func_arg_name: func_arg_name TCOMMA arg_name  */
-#line 201 "parser.y"
-                                              { (yyvsp[-2].arg_name_vec)->push_back((yyvsp[0].arg_name)); }
-#line 1543 "parser.cpp"
-    break;
-
-  case 92: /* func_assign: TSYM_FN ident TEQUAL func_block  */
-#line 204 "parser.y"
-                                              { (yyval.stmt) = new NFunctionAssignment(*(yyvsp[-2].ident), *(yyvsp[0].block)); }
-#line 1549 "parser.cpp"
-    break;
-
-  case 93: /* func_assign: TSYM_FN ident TLPAREN TRPAREN TEQUAL func_block  */
-#line 205 "parser.y"
-                                                              { (yyval.stmt) = new NFunctionAssignment(*(yyvsp[-4].ident), *(yyvsp[0].block)); }
-#line 1555 "parser.cpp"
-    break;
-
-  case 94: /* func_assign: TSYM_FN ident func_arg_name TEQUAL func_block  */
-#line 206 "parser.y"
-                                                            { (yyval.stmt) = new NFunctionAssignment(*(yyvsp[-3].ident), *(yyvsp[-2].arg_name_vec), *(yyvsp[0].block)); delete (yyvsp[-2].arg_name_vec);}
-#line 1561 "parser.cpp"
-    break;
-
-  case 95: /* func_assign: TSYM_FN ident TLPAREN func_arg_name TRPAREN TEQUAL func_block  */
-#line 207 "parser.y"
-                                                                            { (yyval.stmt) = new NFunctionAssignment(*(yyvsp[-5].ident), *(yyvsp[-3].arg_name_vec), *(yyvsp[0].block)); delete (yyvsp[-3].arg_name_vec);}
-#line 1567 "parser.cpp"
+  case 54: /* factor_var: TINTEGER  */
+#line 154 "./parser-bison/parser.y"
+                      { (yyval.expr) = new NInteger(atol((yyvsp[0].string)->c_str())); delete (yyvsp[0].string); }
+#line 1452 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
     break;
 
 
-#line 1571 "parser.cpp"
+#line 1456 "/home/franbvc/Insper/LogComp/lang/silhouette-lang/test-llvm/build/parser.cpp"
 
       default: break;
     }
@@ -1760,5 +1645,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 211 "parser.y"
+#line 158 "./parser-bison/parser.y"
 

@@ -1,0 +1,13 @@
+let x: Int = 11;
+let y: Int = 52;
+let z: Int = 0;
+
+if (z == 11) && (x == 0) {
+    y = x;
+} else {
+    y = 2*x;
+}
+
+y;
+
+2 * (5 + 10) *4;

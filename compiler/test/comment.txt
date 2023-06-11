@@ -1,0 +1,4 @@
+// this is a comment
+let x: Int = 5;
+// let y: Int = 10;
+x;

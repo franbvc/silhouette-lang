@@ -1,0 +1,10 @@
+fn rec x: Int = {
+    if (x < 100) {
+        result -> call rec(x+1);
+    } else {
+        result -> 100;
+    }
+}
+
+let foo: Int = 30;
+call rec(foo);

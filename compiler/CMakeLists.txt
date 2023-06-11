@@ -34,7 +34,7 @@ target_link_libraries(parser PRIVATE
 
 # Debugging options
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
 
 # Print Flex output files
 foreach(outputFile ${FLEX_TokenizerFlex_OUTPUTS})

@@ -1,0 +1,19 @@
+fn fib x: Int = {
+    if (x == 0) || (x == 1) {
+        result -> x;
+    } else {
+	result -> fib(x-1) + fib(x-2);
+    }
+}
+
+fn factorial x: Int = {
+    if x <= 1 { 
+        result -> 1; 
+    } else {
+        result -> x * call factorial(x-1);
+    }
+}
+
+let foo: Int = call factorial(5);
+let bar: Int = call fib(11);
+bar;

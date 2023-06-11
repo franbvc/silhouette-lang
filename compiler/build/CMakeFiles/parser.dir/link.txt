@@ -1,0 +1,1 @@
+/usr/bin/c++  -g CMakeFiles/parser.dir/parser.cpp.o CMakeFiles/parser.dir/tokens.cpp.o CMakeFiles/parser.dir/codegen.cpp.o CMakeFiles/parser.dir/main.cpp.o -o parser  -Wl,-rpath,/usr/lib/llvm-14/lib /usr/lib/llvm-14/lib/libLLVM-14.so.1 
