@@ -261,7 +261,6 @@ llvm::Value *NIfStatement::codeGen(CodeGenContext &context) {
     currFunc->getBasicBlockList().push_back(elseBB);
     context.pushBlockGlobal(elseBB);
 
-
     // Emit bytecode for "else" block
     llvm::Value *elseV = falseBlock.codeGen(context);
     if (!elseV)
@@ -275,7 +274,6 @@ llvm::Value *NIfStatement::codeGen(CodeGenContext &context) {
     currFunc->getBasicBlockList().push_back(mergeBB);
     context.pushBlockGlobal(mergeBB);
 
-
     unsigned reservedValues = 2;
     llvm::PHINode* PN = llvm::PHINode::Create(elseV->getType(), reservedValues, "");
     PN->addIncoming(thenV, thenBB);
@@ -285,3 +283,94 @@ llvm::Value *NIfStatement::codeGen(CodeGenContext &context) {
 
     return PN;
 }
+
+llvm::Value* NFunctionDeclaration::codeGen(CodeGenContext& context)
+{
+    vector<llvm::Type*> argTypes;
+    auto i64Type = llvm::Type::getInt64Ty(context.context);
+    VariableList::const_iterator it;
+    for (it = arguments.begin(); it != arguments.end(); it++) {
+        argTypes.push_back(i64Type);
+    }
+
+    llvm::FunctionType *ftype = llvm::FunctionType::get(i64Type, argTypes, false);
+    llvm::Function *function = llvm::Function::Create(
+        ftype, llvm::GlobalValue::InternalLinkage, id.name, context.module);
+    llvm::BasicBlock *bblock = llvm::BasicBlock::Create(context.context, "entry", function, 0);
+
+    context.pushBlock(bblock);
+
+    unsigned numArgs = function->arg_size();
+    llvm::Value* argVal;
+
+    for (unsigned i = 0; i < numArgs; i++) {
+        auto arg = arguments[i];
+        arg->codeGen(context);
+
+        argVal = function->getArg(i);
+        argVal->setName(arg->id.name);
+
+        auto inst = new llvm::StoreInst(
+            argVal,
+            context.locals()[arg->id.name],
+            false,
+            bblock
+            );
+    }
+
+    llvm::Value* retVal = block.codeGen(context);
+    llvm::ReturnInst::Create(context.context, retVal,bblock);
+
+
+    context.popBlock();
+    std::cout << "Creating function: " << id.name << std::endl;
+    return function;
+}
+
+
+llvm::Value* NMethodCall::codeGen(CodeGenContext& context)
+{
+    cout << "Arrived at methodCall" << endl;
+    llvm::Function *function = context.module->getFunction(id.name);
+    if (function == nullptr) {
+        std::cerr << "no such function " << id.name << std::endl;
+    }
+
+    std::vector<llvm::Value*> args;
+    ExpressionList::const_iterator it;
+    for (it = arguments.begin(); it != arguments.end(); it++) {
+        args.push_back((**it).codeGen(context));
+    }
+
+    llvm::CallInst *call = llvm::CallInst::Create(
+        llvm::FunctionType::get(
+        llvm::Type::getInt64Ty(context.context), false),
+        function,
+        args,
+        "",
+        context.currentBlock()
+        );
+
+    std::cout << "Creating method call: " << id.name << std::endl;
+    return call;
+}
+
+llvm::Value* NResult::codeGen(CodeGenContext& context) {
+    llvm::Value *retExpr = expression.codeGen(context);
+    if (!retExpr) {
+        llvm::Type *i64Type = llvm::Type::getInt64Ty(context.context);
+        retExpr = llvm::ConstantInt::get(i64Type, 0, true);
+    }
+
+    return llvm::ReturnInst::Create(context.context, retExpr, context.currentBlock());
+}
+
+
+
+
+
+
+
+
+
+

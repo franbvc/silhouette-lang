@@ -1,0 +1,16 @@
+fn sumTwo a: Int, b: Int = { 
+    a*a + b*b;
+}
+
+fn subTwo a: Int, b: Int = {
+    let x: Int = a - b;
+    result -> x;
+    x -10;
+}
+
+let a: Int = 5;
+let b: Int = 2;
+let c: Int = call sumTwo(a, b);
+let d: Int = call subTwo(c, b);
+
+d;

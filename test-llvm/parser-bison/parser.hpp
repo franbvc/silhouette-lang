@@ -80,7 +80,12 @@ extern int yydebug;
     TOR = 281,                     /* TOR  */
     TSEMICOLON = 282,              /* TSEMICOLON  */
     TCOLON = 283,                  /* TCOLON  */
-    TLET = 284                     /* TLET  */
+    TARROW = 284,                  /* TARROW  */
+    TCOMMA = 285,                  /* TCOMMA  */
+    TLET = 286,                    /* TLET  */
+    TFN = 287,                     /* TFN  */
+    TCALL = 288,                   /* TCALL  */
+    TRESULT = 289                  /* TRESULT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -98,8 +103,11 @@ union YYSTYPE
     NIdentifier *ident;
     int token;
     std::string *string;
+    NVariableDeclaration *var_decl;
+    std::vector<NVariableDeclaration*> *varvec;
+    std::vector<NExpression*> *exprvec;
 
-#line 103 "parser.hpp"
+#line 111 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

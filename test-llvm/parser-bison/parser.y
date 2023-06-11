@@ -15,6 +15,9 @@
     NIdentifier *ident;
     int token;
     std::string *string;
+    NVariableDeclaration *var_decl;
+    std::vector<NVariableDeclaration*> *varvec;
+    std::vector<NExpression*> *exprvec;
 }
 
 /* Define our terminal symbols (tokens). This should
@@ -28,8 +31,8 @@
 %token <token> TPLUS TMINUS TMUL TDIV TEQUAL
 %token <token> TNOT TCEQ TCNE TCGT TCGE TCLT TCLE
 %token <token> TAND TOR
-%token <token> TSEMICOLON TCOLON
-%token <token> TLET
+%token <token> TSEMICOLON TCOLON TARROW TCOMMA
+%token <token> TLET TFN TCALL TRESULT
 
 /* Define the type of node our nonterminal symbols represent.
    The types refer to the %union declaration above. Ex: when
@@ -38,8 +41,11 @@
  */
 %type <ident> ident
 %type <expr> expr factor_var term factor rel_expr
-%type <block> program stmts block
-%type <stmt> stmt var_decl if_stmt var_assign
+%type <varvec> fn_decl_args
+%type <exprvec> fn_call_args
+%type <block> program stmts block fn_block fn_stmts
+%type <stmt> stmt var_decl if_stmt var_assign fn_decl fn_var_decl
+%type <stmt> fn_stmt
 %type <token> var_type
 
 /* Operator precedence for mathematical operators */
@@ -65,6 +71,7 @@ stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
 stmt : rel_expr TSEMICOLON { $$ = new NExpressionStatement(*$1); }
      | var_decl TSEMICOLON
      | var_assign TSEMICOLON
+     | fn_decl
      | if_stmt
      ;
 
@@ -81,6 +88,35 @@ var_assign : ident TEQUAL rel_expr { $$ = new NAssignment(*$<ident>1, *$3); };
 if_stmt : TIF rel_expr block { $$ = new NIfStatement(*$2, *$3, *(new NBlock())); }
         | TIF rel_expr block TELSE block { $$ = new NIfStatement(*$2, *$3, *$5); }
         ;
+
+/* Function */
+/* fn addTwo a, b = { result -> a + b }; */
+fn_block : TLBRACE fn_stmts TRBRACE { $$ = $2; };
+
+fn_stmts : fn_stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
+	 | fn_stmts fn_stmt { $1->statements.push_back($<stmt>2); }
+	 ;
+
+fn_stmt : stmt
+	| TRESULT TARROW rel_expr TSEMICOLON { $$ = new NResult(*$3); }
+	;
+
+fn_decl : TFN ident fn_decl_args TEQUAL fn_block
+	{ $$ = new NFunctionDeclaration(*$2, *$3, *$5); delete $3; }
+	;
+
+fn_decl_args : /*blank*/  { $$ = new VariableList(); }
+        | fn_var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
+        | fn_decl_args TCOMMA fn_var_decl { $1->push_back($<var_decl>3); }
+        ;
+
+fn_var_decl : ident TCOLON  var_type { $$ = new NVariableDeclaration(*$1, $3); }
+	    ;
+
+fn_call_args : /*blank*/ { $$ = new ExpressionList(); }
+	     | rel_expr { $$ = new ExpressionList(); $$->push_back($1); }
+	     | fn_call_args TCOMMA rel_expr { $1->push_back($3); }
+	     ;
 
 /* Expression */
 rel_expr : rel_expr TCEQ expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
@@ -109,6 +145,7 @@ factor : TLPAREN rel_expr TRPAREN { $$ = $2; }
        | TMINUS factor { $$ = new NUnaryOperator($1, *$2); }
        | TNOT factor { $$ = new NUnaryOperator($1, *$2); }
        | ident { $<ident>$ = $1; }
+       | TCALL ident TLPAREN fn_call_args TRPAREN { $$ = new NMethodCall(*$2, *$4); delete $4; }
        | factor_var
        ;
 

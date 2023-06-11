@@ -5,8 +5,12 @@
 
 class CodeGenContext;
 class NStatement;
+class NExpression;
+class NVariableDeclaration;
 
 typedef std::vector<NStatement *> StatementList;
+typedef std::vector<NExpression *> ExpressionList;
+typedef std::vector<NVariableDeclaration *> VariableList;
 
 class Node {
   public:
@@ -54,7 +58,6 @@ class NIdentifier : public NExpression {
 class NVariableDeclaration : public NStatement {
   public:
     const int type;
-    //const NIdentifier &type;
     NIdentifier &id;
     NExpression *assignmentExpr;
 
@@ -113,21 +116,48 @@ class NExpressionStatement : public NStatement {
     virtual llvm::Value *codeGen(CodeGenContext &context);
 };
 
-class NIfStatement : public NStatement
-{
+class NIfStatement : public NStatement {
   public:
     NExpression &condition;
     NBlock &trueBlock;
     NBlock &falseBlock;
 
-    NIfStatement(NExpression &condition, NBlock &trueBlock, NBlock &falseBlock) : condition(condition), trueBlock(trueBlock), falseBlock(falseBlock) {}
-    //NIfStatement(NExpression &condition, NBlock &trueBlock) : condition(condition), trueBlock(trueBlock) {}
+    NIfStatement(NExpression &condition, NBlock &trueBlock, NBlock &falseBlock)
+        : condition(condition), trueBlock(trueBlock), falseBlock(falseBlock) {}
+    // NIfStatement(NExpression &condition, NBlock &trueBlock) :
+    // condition(condition), trueBlock(trueBlock) {}
     virtual llvm::Value *codeGen(CodeGenContext &context);
 };
 
+class NFunctionDeclaration : public NStatement {
+  public:
+    const NIdentifier &id;
+    VariableList arguments;
+    NBlock &block;
 
+    NFunctionDeclaration(const NIdentifier &id, const VariableList &arguments,
+                         NBlock &block)
+        : id(id), arguments(arguments), block(block) {}
 
+    virtual llvm::Value *codeGen(CodeGenContext &context);
+};
 
+class NMethodCall : public NExpression {
+  public:
+    const NIdentifier &id;
+    ExpressionList arguments;
 
+    NMethodCall(const NIdentifier &id, ExpressionList &arguments)
+        : id(id), arguments(arguments) {}
+    NMethodCall(const NIdentifier &id) : id(id) {}
 
+    virtual llvm::Value *codeGen(CodeGenContext &context);
+};
 
+class NResult : public NStatement {
+  public:
+    NExpression &expression;
+    NResult(NExpression &expression) : expression(expression) {}
+
+    virtual llvm::Value *codeGen(CodeGenContext &context);
+};

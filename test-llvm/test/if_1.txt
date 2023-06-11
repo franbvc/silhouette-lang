@@ -1,8 +1,8 @@
 let foo: Int = 10;
-let bar: Int = 20;
+let bar: Int = 35;
 let fooBar: Int = 0;
 
-if (foo > bar) { 
+if (foo < bar) { 
     fooBar = foo - bar; 
 } else {
     fooBar = bar - foo;
