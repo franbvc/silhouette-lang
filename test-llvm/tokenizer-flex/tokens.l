@@ -9,7 +9,8 @@ extern "C" int yywrap() { return 1; }
 
 %%
 
-[ \t\n]              ; /* ignore whitespace */
+\/\/.*(?:\r?\n|$)       ; /* ignore comments */
+[ \t\n]                 ; /* ignore whitespace */
 Int                     return TOKEN(TTYPE_INT);
 let                     return TOKEN(TLET);
 if                      return TOKEN(TIF);

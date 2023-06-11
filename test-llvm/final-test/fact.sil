@@ -1,0 +1,9 @@
+fn fact x: Int = {
+    if x <= 1 {
+        result -> 1;
+    } else {
+        result -> x * fact(x-1);
+    }
+}
+
+call fact(5);

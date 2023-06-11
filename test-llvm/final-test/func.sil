@@ -1,0 +1,36 @@
+fn addTwo x: Int, y: Int = {
+    x + y;
+}
+
+fn square x: Int = {
+    ->x*x;
+}
+
+fn max x: Int, y: Int = {
+    if x > y {
+        result -> x;
+    } else {
+        ->y;
+    }
+}
+
+fn min x: Int, y: Int = {
+    if x < y {
+        result -> x;
+    } else {
+        result -> y;
+    }
+}
+
+fn runCode = {
+    let foo: Int = 2;
+    let bar: Int = 3;
+    let fooBar: Int = addTwo(foo, bar);
+    fooBar = call square(fooBar);
+
+    let ret: Int = max(fooBar, 15);
+
+    result -> min(fooBar, 100);
+}
+
+call runCode();

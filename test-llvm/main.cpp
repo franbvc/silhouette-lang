@@ -19,9 +19,23 @@ int main(int argc, char **argv) {
   std::cout << "Ran yyparse!" << std::endl;
   std::cout << programBlock << std::endl;
 
-  /* Print Type os statements in programBlock*/
-  // for (auto stmt : programBlock->statements)
-  //     std::cout << typeid(*stmt).name() << std::endl;
+  //std::cout << "Statements in program block:" << std::endl;
+  ///* Print Type os statements in programBlock*/
+  //for (auto stmt : programBlock->statements) {
+  //    if (typeid(*stmt) == typeid(NFunctionDeclaration)) {
+  //        auto functionDecl = dynamic_cast<NFunctionDeclaration*>(stmt);
+  //        for (auto & arg : functionDecl->arguments) {
+  //            std::cout << "    " << arg->id.name << std::endl;
+  //        }
+
+  //    } else {
+  //        std::cout << typeid(*stmt).name() << std::endl;
+
+  //    }
+  //}
+
+
+  std::cout << "End Statements" << std::endl << std::endl;
 
   CodeGenContext context;
   context.generateCode(*programBlock);

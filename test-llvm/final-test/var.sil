@@ -1,0 +1,6 @@
+let a: Int = 15;
+let b: Int = 5;
+
+let c: Int = (5 + a)/b;
+
+c;

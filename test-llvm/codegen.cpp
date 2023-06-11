@@ -7,7 +7,7 @@ using namespace std;
 
 /* Compile the AST into a module */
 void CodeGenContext::generateCode(NBlock &root) {
-    std::cout << "Generating code...n";
+    std::cout << "Generating code...\n";
 
     /* Create the top level interpreter function to call as entry */
     std::vector<llvm::Type *> argTypes;
@@ -281,6 +281,11 @@ llvm::Value *NIfStatement::codeGen(CodeGenContext &context) {
 
     context.currentBlock()->getInstList().push_back(PN);
 
+    //std::cout << "Code generated at function end" << endl;
+    //llvm::legacy::PassManager pm;
+    //pm.add(createPrintModulePass(llvm::outs()));
+    //pm.run(*context.module);
+
     return PN;
 }
 
@@ -319,7 +324,15 @@ llvm::Value* NFunctionDeclaration::codeGen(CodeGenContext& context)
     }
 
     llvm::Value* retVal = block.codeGen(context);
-    llvm::ReturnInst::Create(context.context, retVal,bblock);
+
+    ////cout << "DEBUG......................" << endl;
+    //cout << "BBlock Name: " << bblock->getName().str() << endl;
+    //cout << "Stack top Block Name: " << context.currentBlock()->getName().str() << endl;
+    llvm::ReturnInst::Create(context.context, retVal,context.currentBlock());
+
+    while (bblock != context.currentBlock()) {
+        context.popBlock();
+    }
 
 
     context.popBlock();

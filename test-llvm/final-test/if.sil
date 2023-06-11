@@ -1,0 +1,18 @@
+let x: Int = 10;
+let y: Int = 20;
+let z: Int = 5;
+
+if x <= y {
+    z = x;
+} else {
+    z = y;
+}
+
+let e: Int;
+if (z != x) && (z != y) {
+    e = 50;
+} else {
+    e = 10;
+}
+
+z + e;

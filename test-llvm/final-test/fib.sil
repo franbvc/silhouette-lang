@@ -1,0 +1,9 @@
+fn fib x: Int = {
+    if (x == 0) || (x == 1) {
+        result -> x;
+    } else {
+	result -> fib(x-1) + fib(x-2);
+    }
+}
+
+call fib(12);

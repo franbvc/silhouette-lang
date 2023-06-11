@@ -43,7 +43,7 @@
 %type <expr> expr factor_var term factor rel_expr
 %type <varvec> fn_decl_args
 %type <exprvec> fn_call_args
-%type <block> program stmts block fn_block fn_stmts
+%type <block> program stmts fn_block fn_stmts //block
 %type <stmt> stmt var_decl if_stmt var_assign fn_decl fn_var_decl
 %type <stmt> fn_stmt
 %type <token> var_type
@@ -59,9 +59,9 @@
 program : stmts { programBlock = $1; }
         ;
 
-block : TLBRACE stmts TRBRACE { $$ = $2; }
-      | TLBRACE TRBRACE { $$ = new NBlock(); }
-      ;
+//block : TLBRACE stmts TRBRACE { $$ = $2; }
+//      | TLBRACE TRBRACE { $$ = new NBlock(); }
+//      ;
 
 stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
       | stmts stmt { $1->statements.push_back($<stmt>2); }
@@ -85,8 +85,8 @@ ident : TIDENTIFIER { $$ = new NIdentifier(*$1); delete $1; }
 
 var_assign : ident TEQUAL rel_expr { $$ = new NAssignment(*$<ident>1, *$3); };
 
-if_stmt : TIF rel_expr block { $$ = new NIfStatement(*$2, *$3, *(new NBlock())); }
-        | TIF rel_expr block TELSE block { $$ = new NIfStatement(*$2, *$3, *$5); }
+if_stmt : TIF rel_expr fn_block { $$ = new NIfStatement(*$2, *$3, *(new NBlock())); }
+        | TIF rel_expr fn_block TELSE fn_block { $$ = new NIfStatement(*$2, *$3, *$5); }
         ;
 
 /* Function */
@@ -99,6 +99,7 @@ fn_stmts : fn_stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
 
 fn_stmt : stmt
 	| TRESULT TARROW rel_expr TSEMICOLON { $$ = new NResult(*$3); }
+	| TARROW rel_expr TSEMICOLON { $$ = new NResult(*$2); }
 	;
 
 fn_decl : TFN ident fn_decl_args TEQUAL fn_block
@@ -110,7 +111,7 @@ fn_decl_args : /*blank*/  { $$ = new VariableList(); }
         | fn_decl_args TCOMMA fn_var_decl { $1->push_back($<var_decl>3); }
         ;
 
-fn_var_decl : ident TCOLON  var_type { $$ = new NVariableDeclaration(*$1, $3); }
+fn_var_decl : ident TCOLON  var_type { $$ = new NVariableDeclaration(*$1, $3, nullptr); }
 	    ;
 
 fn_call_args : /*blank*/ { $$ = new ExpressionList(); }
@@ -146,6 +147,7 @@ factor : TLPAREN rel_expr TRPAREN { $$ = $2; }
        | TNOT factor { $$ = new NUnaryOperator($1, *$2); }
        | ident { $<ident>$ = $1; }
        | TCALL ident TLPAREN fn_call_args TRPAREN { $$ = new NMethodCall(*$2, *$4); delete $4; }
+       | ident TLPAREN fn_call_args TRPAREN { $$ = new NMethodCall(*$1, *$3); delete $3; }
        | factor_var
        ;
 
