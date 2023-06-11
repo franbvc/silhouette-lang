@@ -33,3 +33,40 @@ ans = ans + fact(4);
 
 ans * 2;
 ```
+
+## Requirements
+
+* Flex 2.6.4
+* Bison 3.8.2
+* Clang++ 14.0.0
+* CMake 3.22.1 (optional)
+
+## How to compile
+### Note: All commands should be run from the `/compiler` directory located at the root of the project.
+
+
+1. Using CMake:
+
+```
+cmake --build ./build
+```
+
+2. Using Flex, Bison, and Clang++:
+
+  * Flex: `flex -o ./tokenizer-flex/tokens.cpp ./tokenizer-flex/tokens.l`
+  * Bison: `bison -o ./parser-bison/parser.cpp ./parser-bison/parser.y`
+  * Clang++: `clang++ ./parser-bison/parser.cpp codegen.cpp main.cpp ./tokenizer-flex/tokens.cpp -o parser -lLLVM -L/usr/lib/llvm-14/lib`
+
+## How to run
+
+1. Compiled using CMake:
+
+```
+./build/parser < {input file}
+```
+
+2. Compiled using Flex, Bison, and Clang++:
+
+```
+./parser < {input file}
+```
