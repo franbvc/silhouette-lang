@@ -1,73 +1,59 @@
 DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 ) ;
 LETTER = ( a | ... | z | A | ... | Z ) ;
-SYMBOL = ( ! | @ | # | $ | % | ^ | & | * | ( | ) | - | _ | 
-           + | = | [ | ] | { | } | \ | | | ; | : | ' | " |
-           , | . | / | ? | ~ ) ;
 
 (*Keywords*)
 
-TYPE = ( "CHAR" | "STRING" | "INT" | "FLOAT" | "BOOL" ) ;
+TYPE = ( "Int" ) ;
 
 (*Types*)
 INTEGER = DIGIT, { DIGIT } ;
-CHAR = "'", (LETTER | DIGIT | SYMBOL), "'" ;
-STRING = '"', { LETTER | DIGIT | SYMBOL }, '"' ;
-FLOAT = INTEGER, ".", INTEGER ;
-BOOL = "1" | "0" | "true" | "false";
-NUMBER = INTEGER | FLOAT ;
 
 (*Variables*)  
 IDENTIFIER = LETTER, { LETTER | DIGIT | "_" } ;
-ASSIGNMENT_NUMBER = "INT", IDENTIFIER, "=", EXPRESSION ;
-ASSIGNMENT_CHAR = "CHAR", IDENTIFIER, "=", CHAR ;
-ASSIGNMENT_STRING = "STRING", IDENTIFIER, "=", STRING ;
-ASSIGNMENT_BOOL = "BOOL", IDENTIFIER, "=", LOGICAL ;
-
-ASSIGNMENT_VALUE = ASSIGNMENT_NUMBER | ASSIGNMENT_CHAR | ASSIGNMENT_STRING | ASSIGNMENT_BOOL ;
-
-INCREMENT_ASSIGNMENT = IDENTIFIER, "++" ;
-DECREMENT_ASSIGNMENT = IDENTIFIER, "--" ;
-ADDITION_ASSIGNMENT = IDENTIFIER, "+=", EXPRESSION ;
-SUBTRACTION_ASSIGNMENT = IDENTIFIER, "-=", EXPRESSION ;
-MULTIPLICATION_ASSIGNMENT = IDENTIFIER, "*=", EXPRESSION ;
-DIVISION_ASSIGNMENT = IDENTIFIER, "/=", EXPRESSION ;
-
-ASSIGNMENT_OPERATION = INCREMENT_ASSIGNMENT | DECREMENT_ASSIGNMENT | 
-                       ADDITION_ASSIGNMENT | SUBTRACTION_ASSIGNMENT |
-                       MULTIPLICATION_ASSIGNMENT | DIVISION_ASSIGNMENT ;
 
 (*Program*)
 BLOCK = "{", { STATEMENT }, "}" ;
-STATEMENT = ( λ, "\n") | ( ":", ( ASSIGNMENT_VALUE | ASSIGNMENT_OPERATION | PRINT | IF | WHILE_LOOP | FOR_LOOP | FUNCTION_HEADER | FUNCTION_CALL), [ "\n" ]) ;
+STATEMENT = ( ( RELATIVE_EXPRESSION, ";" ) 
+            | ( VARIABLE_DECLARATION, ";" ) 
+            | ( VARIABLE_ASSIGNMENT, ";" ) 
+            | ( IF ) 
+            | ( FUNCTION_DECLARATION )
+            | ( "result", "->", RELATIVE_EXPRESSION, ";" )
+            | ( "->", RELATIVE_EXPRESSION, ";" )  
+            ) ;
+
+(*Variables*) 
+VARIABLE_DECLARATION = "let", IDENTIFIER, ":", TYPE, ( "=", RELATIVE_EXPRESSION ) ;
+VARIABLE_ASSIGNMENT = IDENTIFIER, "=", RELATIVE_EXPRESSION ;
 
 (*Arithmetic*)
-EXPRESSION = TERM, { ("+" | "-"), TERM } ;
-TERM = FACTOR, { ("*" | "/"), FACTOR } ;
-FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER ;
+RELATIVE_EXPRESSION = ( RELATIVE_EXPRESSION, 
+                        ( "=="
+                        | "!="
+                        | "<"
+                        | ">"
+                        | "<="
+                        | ">=" 
+                        ) 
+                      ), 
+                      EXPRESSION ;
 
-(*Printing*)
-PRINT = "print", "(", ( EXPRESSION | LOGICAL ), ")" ;
+EXPRESSION = ( EXPRESSION, ("+" | "-" | "||") ), TERM ;
+TERM = ( TERM, ("*" | "/" | "&&") ), FACTOR ;
+FACTOR = ( ("+" | "-" | "!"), FACTOR) 
+         | INTEGER 
+         | "(", RELATIVE_EXPRESSION, ")" 
+         | IDENTIFIER 
+         | "call", IDENTIFIER, "(", FUNCTION_CALL_ARGS, ")"
+         | IDENTIFIER, "(", FUNCTION_CALL_ARGS, ")"
+         ;
 
 (*Conditional*)
-LOGICAL = CONDITION, { ("&&" | "||"), CONDITION } ;
-CONDITION = CONDITION_FACTOR, { (">" | "<" | ">=" | "<=" | "==" | "!="), CONDITION_FACTOR };
-CONDITION_FACTOR = (("!" | "not"), CONDITION_FACTOR) | EXPRESSION | "(", LOGICAL, ")" | IDENTIFIER | BOOL;
-
-IF = "if", "(", LOGICAL, ")", BLOCK, [ELIF], [ELSE] ;
-ELIF = ":elif", "(", LOGICAL, ")", BLOCK;
-ELSE = ":else", BLOCK ;
-
-(*Loops*)
-LOOP_BLOCK =  "{", { STATEMENT | ":break" | ":continue" }, "}" ;
-WHILE_LOOP = "while", "(", LOGICAL, ")", LOOP_BLOCK ;
-FOR_LOOP = "for", "(", ASSIGNMENT_NUMBER, ";", LOGICAL, ";", ASSIGNMENT_OPERATION, ")", LOOP_BLOCK ;
+IF = "if",  RELATIVE_EXPRESSION,  BLOCK, ( "ELSE", BLOCK ) ;
 
 (*Functions*)
-ARGUMENT = IDENTIFIER, ":", TYPE, { ",", IDENTIFIER, ":", TYPE } ;
-RESULT = ":result", [EXPRESSION];
-GUARD_CLAUSE = ":guard", EXPRESSION, ":", BLOCK;
-BODY =  "{", { STATEMENT | GUARD_CLAUSE | RESULT}, "}";
-FUNCTION_HEADER = "fn", IDENTIFIER, "(", ARGUMENT, ")", ":", (TYPE | "VOID"), BODY;
-FUNCTION_CALL = "call" IDENTIFIER, "(", [EXPRESSION], { ",", EXPRESSION }, ")";
+FUNCTION_DECLARATION = "fn", IDENTIFIER, FUNCTION_DECLARATION_ARGS, "=", BLOCK ;
+FUNCTION_DECLARATION_ARGS = ( λ | IDENTIFIER, ":", TYPE, { ",", IDENTIFIER, ":", TYPE } );
+FUNCTION_CALL_ARGS = ( λ | RELATIVE_EXPRESSION, { ",", RELATIVE_EXPRESSION } ) ;
 
 
